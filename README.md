@@ -1,2 +1,2 @@
 # attendance
-moodele attendance plugin
+moodle attendance plugin
