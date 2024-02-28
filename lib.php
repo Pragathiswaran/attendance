@@ -21,5 +21,23 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+ defined('MOODLE_INTERNAL') || die();
+
+class local_attendance_event extends \core\event\base {
+    protected function init() {
+        $this->data['objecttable'] = 'attendance';
+        $this->data['crud'] = 'r';
+        $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
+    }
+
+    public static function get_name() {
+        return get_string('eventname', 'local_attendance');
+    }
+
+    public function get_description() {
+        return "Some description about your event.";
+    }
+}
+
 
 function local_attendance_before_footer(){}
