@@ -1,5 +1,5 @@
-<?php
-// This file is part of Moodle - http://moodle.org/
+<?php 
+// This file is part of Moodle Course Rollover Plugin
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,16 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'local_message', language 'en'
- *
- * @package   local_attendance
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     local_attendance
+ * @author      Prgathiswaran
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
  defined('MOODLE_INTERNAL') || die();
-
-
- $string['hello'] = 'Hello';
- $string['hello_message'] = 'Hello, World! You have successfully logged in.';
  
- $string['hello_world'] = 'Hello, World!'; 
+ $observers = array(
+    array(
+        'eventname' => '\core\event\user_loggedin',
+        'callback'  => '\local_attendance::user_loggedin',
+    ),
+);
+
+ 

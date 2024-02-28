@@ -25,4 +25,11 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_attendance';
 $plugin->version = 2020110901;
-// $plugin->requires = 2016052300; // Moodle version
+$plugin->requires = 2016052300; // Moodle version
+
+$observers = array(
+    array(
+        'eventname' => '\core\event\user_loggedin',
+        'callback'  => 'local_attendance_user_loggedin_handler',
+    ),
+);
