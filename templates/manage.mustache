@@ -23,6 +23,33 @@
 
     }
 }}
+<link rel="stylesheet" type="text/css" href="style.css">
+<h1>Attendance Report</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Userid</th>
+            <th>User</th>
+            <th>Date</th>
+            <th>Logged in</th>
+            <th>Logged out</th>
+            <th>Time Spent</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#result}}
+            <tr>
+                <td>{{userid}}</td>
+                <td>{{username}}</td>
+                <td>{{date}}</td>
+                <td>{{loggedin}}</td>
+                <td>{{loggedout}}</td>
+                <td>{{difference}}</td>
+            </tr>
+        {{/result}}
+    </tbody>
+</table>
 
-<h1>List of messages</h1>
-<p>{{example}}</p>
+
+
+

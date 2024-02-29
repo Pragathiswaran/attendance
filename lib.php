@@ -15,76 +15,113 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'local_message', language 'en'
+ * class and fucntions
  *
  * @package   local_attendance
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-function get_attendance(){
-    global $DB, $USER;
 
-$sql = '
-    SELECT
-        l.id AS "Log_event_id",
-        l.timecreated AS "Timestamp",
-        DATE_FORMAT(FROM_UNIXTIME(l.timecreated), "%H:%i") AS "Time",
-        DATE_FORMAT(FROM_UNIXTIME(l.timecreated), "%Y-%m-%d") AS "Date",
-        l.action,
-        u.id AS "userid",
-        u.username,
-        l.origin,
-        l.ip
-    FROM
-        mdl_logstore_standard_log l
-    JOIN
-        mdl_user u ON u.id = l.userid
-    WHERE
-        l.action = "loggedin"
-        AND l.userid = :userid
-        AND l.timecreated = (
-            SELECT MAX(timecreated)
-            FROM mdl_logstore_standard_log
-            WHERE action = "loggedin" AND userid = l.userid
-        )
-    ORDER BY
-        l.timecreated DESC
-    LIMIT 1
-';
+ class local_attendance{
+    public function getLogin(){
+        global $DB;
+        $sql = 'SELECT l.id AS "Log_event_id",
+            l.timecreated AS "Timestamp",
+            DATE_FORMAT(FROM_UNIXTIME(l.timecreated),"%Y-%m-%d %H:%i:%s") AS "Time_UTC",
+            DATE_FORMAT(FROM_UNIXTIME(l.timecreated),"%Y-%m-%d") AS "date",
+            l.action,
+            u.username,
+            u.id,
+            l.origin,
+            l.ip
+            FROM mdl_logstore_standard_log l
+            JOIN mdl_user u ON u.id = l.userid
+            WHERE l.action IN ("loggedin")
+            AND l.userid != :exclude_userid
+            ORDER BY l.timecreated ' ;
 
-$param = ['userid' => $USER->id];
-$attendance = $DB->get_record_sql($sql, $param);
+        $param = ['exclude_userid' => 2];
 
-if ($attendance) {
-    // Check if an attendance record already exists for the user and date
-        $record = new stdClass();
-        $record->id = null; // Assuming 'id' is an auto-increment field
-        $record->userid = $attendance->userid;
-        $record->username = $attendance->username;
-        $record->date = $attendance->date;
-        $record->login = $attendance->time;
-        $record->logout = "Not logged out";
-        $record->timespend = "0:00";
+        $loginData = $DB->get_records_sql($sql, $param);
 
-        $result = $DB->insert_record('local_attendance', $record);
-
-        if ($result) {
-            echo "Record inserted successfully";
-        } else {
-            echo "Record insertion failed";
-        }
-    } else {
-        echo "Attendance record already exists for the user and date.";
+        return $loginData;
     }
-} 
 
+    public function getLogout(){
+        global $DB;
 
- 
+        $sql = 'SELECT l.id AS "Log_event_id",
+                l.timecreated AS "Timestamp",
+                DATE_FORMAT(FROM_UNIXTIME(l.timecreated),"%Y-%m-%d %H:%i:%s") AS "Time_UTC",
+                DATE_FORMAT(FROM_UNIXTIME(l.timecreated),"%Y-%m-%d") AS "date",
+                l.action,
+                u.username,
+                l.origin,
+                l.ip
+                FROM mdl_logstore_standard_log l
+                JOIN mdl_user u ON u.id = l.userid
+                WHERE l.action IN ("loggedout")
+                AND l.userid != :exclude_userid
+                ORDER BY l.timecreated';
 
-function local_attendance_before_footer(){
-    if (isloggedin()) {
-         get_attendance();
-    } else {
-        echo "User is not logged in.";
-     }
+        $param = ['exclude_userid' => 2];
+
+        $logoutData = $DB->get_records_sql($sql, $param);
+            
+        return $logoutData;
+
+    }
+
+    public function getUseractivity(){
+        $loginData = $this->getLogin();
+        $logoutData = $this->getLogout();
+        $values = array();
+
+        foreach ($loginData as $key => $value1) {
+            $values[] = array(
+                'username' => $value1->username,
+                'userid' => $value1->id,
+                'date' => $value1->date,
+                'loggedin' => $value1->time_utc,
+            );
+        }
+
+        $values1 = array();
+        foreach ($logoutData as $key => $value2) {
+            $values1[] = array(
+                'loggedout' => $value2->time_utc,
+            );
+        }
+
+        $result = array();
+        for ($i = 0; $i < count($values); $i++) {
+            $time1 = $values[$i]['loggedin'];
+            $time2 = $values1[$i]['loggedout'];
+
+            // Create DateTime objects from the time strings
+            $datetime1 = new DateTime($time1);
+            $datetime2 = new DateTime($time2);
+
+            // Calculate the difference using date_diff()
+            $interval = date_diff($datetime1, $datetime2);
+
+            $result[] = array(
+                'userid'=> $values[$i]['userid'],
+                'username' => $values[$i]['username'],
+                'date' => $values[$i]['date'],
+                'loggedin' => (new DateTime($values[$i]['loggedin']))->format('H:i:s'),
+                'loggedout' => (new DateTime($values1[$i]['loggedout']))->format('H:i:s'),
+                'difference' => $interval->format('%H:%I:%S'),
+            );
+            
+        }
+
+        return array(
+        'result'=> $result
+        );
+    }
+
+ }
+function local_attendance_before_footer() {
+    // example();
 }
