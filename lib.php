@@ -21,23 +21,70 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- defined('MOODLE_INTERNAL') || die();
+function get_attendance(){
+    global $DB, $USER;
+    $sql = '
+        SELECT l.id AS "Log_event_id",
+        l.timecreated AS "Timestamp",
+        DATE_FORMAT(FROM_UNIXTIME(l.timecreated), "%H:%i") AS "Time",
+        DATE_FORMAT(FROM_UNIXTIME(l.timecreated), "%Y-%m-%d") AS "Date",
+        l.action,
+        u.id,
+        u.username,
+        l.origin,
+        l.ip
+        FROM
+            mdl_logstore_standard_log l
+        JOIN
+            mdl_user u ON u.id = l.userid
+        WHERE
+            l.action = "loggedin"
+            AND l.userid = :userid
+            AND l.timecreated = (
+                SELECT MAX(timecreated)
+                FROM mdl_logstore_standard_log
+                WHERE action = "loggedin" AND userid = l.userid
+            )
+        ORDER BY
+            l.timecreated;
+';
 
-class local_attendance_event extends \core\event\base {
-    protected function init() {
-        $this->data['objecttable'] = 'attendance';
-        $this->data['crud'] = 'r';
-        $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
+
+    $param =['userid' => $USER->id];
+    $attendance = $DB->get_record_sql($sql,$param);
+
+    print_r($attendance);
+    $param = ['userid' => $USER->id];
+    $attendance = $DB->get_record_sql($sql, $param);
+    
+    if ($attendance) {
+        $record = new stdClass();
+        $record->id = null;
+        $record->username = $attendance->username;
+        $record->date = $attendance->date;
+        $record->login = $attendance->time;
+        $record->logout = "Not logged out";
+        $record->timespend = "0:00";
+    
+        $result = $DB->insert_record('local_attendance', $record);
+    
+        if ($result) {
+            echo "Record inserted successfully";
+        } else {
+            echo "Record insertion failed";
+        }
+    } else {
+        echo "No 'loggedin' record found for the user.";
     }
 
-    public static function get_name() {
-        return get_string('eventname', 'local_attendance');
-    }
 
-    public function get_description() {
-        return "Some description about your event.";
-    }
 }
+ 
 
-
-function local_attendance_before_footer(){}
+function local_attendance_before_footer(){
+    if (isloggedin()) {
+        // get_attendance();
+    } else {
+        echo "User is not logged in.";
+     }
+}

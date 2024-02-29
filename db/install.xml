@@ -6,7 +6,7 @@
     <TABLES>
         <TABLE NAME="local_attendance" COMMENT="each record is a attendance">
             <FIELDS>
-                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="username" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
                 <FIELD NAME="date" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
                 <FIELD NAME="login" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
