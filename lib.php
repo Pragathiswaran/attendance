@@ -23,67 +23,67 @@
 
 function get_attendance(){
     global $DB, $USER;
-    $sql = '
-        SELECT l.id AS "Log_event_id",
+
+$sql = '
+    SELECT
+        l.id AS "Log_event_id",
         l.timecreated AS "Timestamp",
         DATE_FORMAT(FROM_UNIXTIME(l.timecreated), "%H:%i") AS "Time",
         DATE_FORMAT(FROM_UNIXTIME(l.timecreated), "%Y-%m-%d") AS "Date",
         l.action,
-        u.id,
+        u.id AS "userid",
         u.username,
         l.origin,
         l.ip
-        FROM
-            mdl_logstore_standard_log l
-        JOIN
-            mdl_user u ON u.id = l.userid
-        WHERE
-            l.action = "loggedin"
-            AND l.userid = :userid
-            AND l.timecreated = (
-                SELECT MAX(timecreated)
-                FROM mdl_logstore_standard_log
-                WHERE action = "loggedin" AND userid = l.userid
-            )
-        ORDER BY
-            l.timecreated;
+    FROM
+        mdl_logstore_standard_log l
+    JOIN
+        mdl_user u ON u.id = l.userid
+    WHERE
+        l.action = "loggedin"
+        AND l.userid = :userid
+        AND l.timecreated = (
+            SELECT MAX(timecreated)
+            FROM mdl_logstore_standard_log
+            WHERE action = "loggedin" AND userid = l.userid
+        )
+    ORDER BY
+        l.timecreated DESC
+    LIMIT 1
 ';
 
+$param = ['userid' => $USER->id];
+$attendance = $DB->get_record_sql($sql, $param);
 
-    $param =['userid' => $USER->id];
-    $attendance = $DB->get_record_sql($sql,$param);
-
-    print_r($attendance);
-    $param = ['userid' => $USER->id];
-    $attendance = $DB->get_record_sql($sql, $param);
-    
-    if ($attendance) {
+if ($attendance) {
+    // Check if an attendance record already exists for the user and date
         $record = new stdClass();
-        $record->id = null;
+        $record->id = null; // Assuming 'id' is an auto-increment field
+        $record->userid = $attendance->userid;
         $record->username = $attendance->username;
         $record->date = $attendance->date;
         $record->login = $attendance->time;
         $record->logout = "Not logged out";
         $record->timespend = "0:00";
-    
+
         $result = $DB->insert_record('local_attendance', $record);
-    
+
         if ($result) {
             echo "Record inserted successfully";
         } else {
             echo "Record insertion failed";
         }
     } else {
-        echo "No 'loggedin' record found for the user.";
+        echo "Attendance record already exists for the user and date.";
     }
+} 
 
 
-}
  
 
 function local_attendance_before_footer(){
     if (isloggedin()) {
-        // get_attendance();
+         get_attendance();
     } else {
         echo "User is not logged in.";
      }

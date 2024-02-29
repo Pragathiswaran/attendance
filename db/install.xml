@@ -4,17 +4,19 @@
        xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
     <TABLES>
-        <TABLE NAME="local_attendance" COMMENT="each record is a attendance">
+        <TABLE NAME="local_attendance" COMMENT="each record is an attendance">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-                <FIELD NAME="username" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
-                <FIELD NAME="date" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
-                <FIELD NAME="login" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
-                <FIELD NAME="logout" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
-                <FIELD NAME="timespend" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true"/>
+                <FIELD NAME="username" TYPE="text" NOTNULL="true"/>
+                <FIELD NAME="date" TYPE="text" NOTNULL="true"/>
+                <FIELD NAME="login" TYPE="varchar" LENGTH="10" NOTNULL="true"/>
+                <FIELD NAME="logout" TYPE="text" NOTNULL="true"/>
+                <FIELD NAME="timespend" TYPE="text" NOTNULL="true"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="unique_login" TYPE="unique" FIELDS="login"/>
             </KEYS>
         </TABLE>
     </TABLES>
