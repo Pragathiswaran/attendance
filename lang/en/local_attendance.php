@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'local_message', language 'en'
+ * Strings for component 'local_attendance', language 'en'
  *
  * @package   local_attendance
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
