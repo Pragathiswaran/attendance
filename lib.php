@@ -65,7 +65,6 @@ class local_attendance {
                 $courseActivities[$userId][$courseId]['formatted_time_spent'] = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
             }
         }
-
         return $courseActivities;
     }
 }

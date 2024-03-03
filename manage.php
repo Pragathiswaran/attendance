@@ -27,7 +27,6 @@ echo '<tr>
         <th>Access Count</th>
         <th>Total Time Spent (H:M:S)</th>
       </tr>';
-
 foreach ($activitySummary as $userId => $courses) {
     foreach ($courses as $courseId => $data) {
         echo '<tr>';
