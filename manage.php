@@ -9,38 +9,27 @@ require_capability('moodle/site:config', $context); // Adjust required capabilit
 $PAGE->set_url('/local/attendance/manage.php'); // Adjust URL as necessary
 $PAGE->set_context($context);
 $PAGE->set_title(get_string('pluginname', 'local_attendance'));
-//$PAGE->set_heading(get_string('activityreport', 'local_attendance'));
+$PAGE->set_heading(get_string('activityreport', 'local_attendance'));
 
 echo $OUTPUT->header();
-//echo $OUTPUT->heading(get_string('activityreport', 'local_attendance'));
+echo $OUTPUT->heading(get_string('activityreport', 'local_attendance'));
 
 $attendance = new local_attendance();
 $activitySummary = $attendance->getUserCourseActivity();
 
-echo '<h3>User Activity</h3>';
-echo '<table border="1" style="width:100%">';
-echo '<tr>
-        <th>User ID</th>
-        <th>Username</th>
-        <th>Course Name</th>
-        <th>Date</th>
-        <th>Access Count</th>
-        <th>Total Time Spent (H:M:S)</th>
-      </tr>';
+$test = array();
 foreach ($activitySummary as $userId => $courses) {
     foreach ($courses as $courseId => $data) {
-        echo '<tr>';
-        echo '<td>'.htmlspecialchars($userId).'</td>';
-        echo '<td>'.htmlspecialchars($data['username']).'</td>'; 
-        echo '<td>'.htmlspecialchars($data['course_name']).'</td>';
-        echo '<td>'.htmlspecialchars($data['date']).'</td>';
-        echo '<td>'.htmlspecialchars($data['access_count']).'</td>';
-        echo '<td>'.htmlspecialchars($data['formatted_time_spent']).'</td>';
-        echo '</tr>';
+        $test[] = $data;
     }
 }
+// render all the value by using mustache template
+$templeteValue = [
+    'result' => $test,
+];
 
-echo '</table>';
+echo $OUTPUT->render_from_template('local_attendance/manage', $templeteValue);
+
 
 echo $OUTPUT->footer();
 

@@ -8,7 +8,7 @@ class local_attendance {
         $sql = 'SELECT l.id AS log_event_id,
                 l.timecreated AS timestamp,
                 DATE_FORMAT(FROM_UNIXTIME(l.timecreated), \'%%d-%%m-%%y %%H:%%m:%%s\') AS time_utc,
-                DATE_FORMAT(FROM_UNIXTIME(l.timecreated), \'%%d-%%m-%%y\') AS date,
+                DATE_FORMAT(FROM_UNIXTIME(l.timecreated), \'%d-%m-%y\') AS date,
                 l.action,
                 u.username,
                 u.id AS userid,
@@ -37,6 +37,7 @@ class local_attendance {
             
             if (!isset($courseActivities[$userId][$courseId])) {
                 $courseActivities[$userId][$courseId] = [
+                    'userid' => $userId,
                     'username' => $username,
                     'course_name' => $activity->course_name,
                     'access_count' => 0,
@@ -65,6 +66,45 @@ class local_attendance {
                 $courseActivities[$userId][$courseId]['formatted_time_spent'] = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
             }
         }
+        // return array(
+        //     'result' => $courseActivities,
+        // );
+
         return $courseActivities;
+
+        // echo "<pre>";
+        // print_r($courseActivities);
+        // echo "</pre>";
+    }
+
+    //Course function is for testing purpose. It will not be used in the final version
+    public function course(){
+
+        global $DB;
+
+        $param = ['exclude_userid' => 2];
+
+        $sql = 'SELECT l.id AS log_event_id,
+                l.timecreated AS timestamp,
+                DATE_FORMAT(FROM_UNIXTIME(l.timecreated), \'%d-%m-%y %H:%m:%s\') AS time_utc,
+                DATE_FORMAT(FROM_UNIXTIME(l.timecreated), \'%d-%m-%y\') AS date,
+                l.action,
+                u.username,
+                u.id AS userid,
+                c.id AS courseid,
+                c.fullname AS course_name,
+                l.origin,
+                l.ip
+            FROM mdl_logstore_standard_log l
+            JOIN mdl_user u ON u.id = l.userid
+            JOIN mdl_course c ON c.id = l.courseid
+            WHERE l.courseid != 0 AND l.userid != :exclude_userid
+            ORDER BY u.id, l.courseid, l.timecreated';
+
+        $activityData = $DB->get_records_sql($sql, $param);
+
+        echo "<pre>";
+        print_r($activityData);
+        echo "</pre>";
     }
 }
