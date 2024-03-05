@@ -5,23 +5,23 @@ class local_attendance {
         global $DB;
 
         $param = ['exclude_userid' => 2];
-        $sql = "SELECT l.id AS log_event_id,
-                       l.timecreated AS timestamp,
-                       FROM_UNIXTIME(l.timecreated, '%Y-%m-%d %H:%i:%s') AS time_utc,
-                       FROM_UNIXTIME(l.timecreated, '%H:%i:%s') AS time_only,
-                       FROM_UNIXTIME(l.timecreated, '%Y-%m-%d') AS date,
-                       l.action,
-                       u.username,
-                       u.id AS userid,
-                       c.id AS courseid,
-                       c.fullname AS course_name,
-                       l.origin,
-                       l.ip
-                FROM mdl_logstore_standard_log l
-                JOIN mdl_user u ON u.id = l.userid
-                JOIN mdl_course c ON c.id = l.courseid
-                WHERE l.courseid != 0 AND l.userid != :exclude_userid
-                ORDER BY l.timecreated";
+
+        $sql = 'SELECT l.id AS log_event_id,
+                l.timecreated AS timestamp,
+                DATE_FORMAT(FROM_UNIXTIME(l.timecreated), \'%%d-%%m-%%y %%H:%%m:%%s\') AS time_utc,
+                DATE_FORMAT(FROM_UNIXTIME(l.timecreated), \'%%d-%%m-%%y\') AS date,
+                l.action,
+                u.username,
+                u.id AS userid,
+                c.id AS courseid,
+                c.fullname AS course_name,
+                l.origin,
+                l.ip
+            FROM mdl_logstore_standard_log l
+            JOIN mdl_user u ON u.id = l.userid
+            JOIN mdl_course c ON c.id = l.courseid
+            WHERE l.courseid != 0 AND l.userid != :exclude_userid
+            ORDER BY u.id, l.courseid, l.timecreated';
 
         $activityData = $DB->get_records_sql($sql, $param);
         $userCourseAccess = [];
@@ -31,71 +31,37 @@ class local_attendance {
             $courseId = $activity->courseid;
             $userCourseKey = "{$userId}_{$courseId}";
 
-            if (!isset($userCourseAccess[$userCourseKey])) {
-                $userCourseAccess[$userCourseKey] = [
-                    'userid' => $userId,
-                    'username' => $activity->username,
-                    'courseid' => $courseId,
+            
+            if (!isset($courseActivities[$userId][$courseId])) {
+                $courseActivities[$userId][$courseId] = [
+                    'username' => $username,
                     'course_name' => $activity->course_name,
-                    'sessions' => [],
-                    'date' => $activity->date
+                    'access_count' => 0,
+                    'total_time_spent' => 0, 
+                    'date' => $date 
                 ];
+                $lastActivityTime[$userId][$courseId] = $timestamp;
             }
-
-            $isNewSession = true;
-            $sessions = &$userCourseAccess[$userCourseKey]['sessions'];
-            if (!empty($sessions)) {
-                $lastSession = &$sessions[count($sessions) - 1];
-                $timeSinceLastActivity = $activity->timestamp - $lastSession['end_timestamp'];
-                if ($timeSinceLastActivity <= 1800) {
-                    $isNewSession = false;
-                    $lastSession['end_time'] = $activity->time_only;
-                    $lastSession['end_timestamp'] = $activity->timestamp;
+            $courseActivities[$userId][$courseId]['access_count']++;
+            if (isset($lastActivityTime[$userId][$courseId])) {
+                $timeDiff = $timestamp - $lastActivityTime[$userId][$courseId];
+                $maxIdleTime = 3600;
+                if ($timeDiff < $maxIdleTime) 
+                {
+                    $courseActivities[$userId][$courseId]['total_time_spent'] += $timeDiff;
                 }
             }
-
-            if ($isNewSession) {
-                $sessions[] = [
-                    'start_time' => $activity->time_only,
-                    'end_time' => $activity->time_only,
-                    'start_timestamp' => $activity->timestamp,
-                    'end_timestamp' => $activity->timestamp
-                ];
+            $lastActivityTime[$userId][$courseId] = $timestamp;
+        }
+        foreach ($courseActivities as $userId => $courses) {
+            foreach ($courses as $courseId => $summary) {
+                $totalSeconds = $summary['total_time_spent'];
+                $hours = floor($totalSeconds / 3600);
+                $minutes = floor(($totalSeconds / 60) % 60);
+                $seconds = $totalSeconds % 60;
+                $courseActivities[$userId][$courseId]['formatted_time_spent'] = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
             }
         }
-
-        foreach ($userCourseAccess as &$userCourse) {
-            foreach ($userCourse['sessions'] as &$session) {
-                $durationSeconds = $session['end_timestamp'] - $session['start_timestamp'];
-                $session['duration'] = gmdate('H:i:s', $durationSeconds);
-            }
-        }
-
-        return $userCourseAccess;
-    }
-
-    public function saveUserCourseActivityToDatabase() {
-        global $DB;
-
-        $userCourseAccess = $this->getUserCourseActivity();
-
-        
-        foreach ($userCourseAccess as $access) {
-            foreach ($access['sessions'] as $session) {
-                $record = new stdClass();
-                $record->userid = $access['userid'];
-                $record->username = $access['username'];
-                $record->courseid = $access['courseid'];
-                $record->course_name = $access['course_name'];
-                $record->date = $access['date'];
-                $record->start_time = $session['start_time'];
-                $record->end_time = $session['end_time'];
-                $duration = explode(":", $session['duration']);
-                $record->duration = ($duration[0] * 3600) + ($duration[1] * 60) + $duration[2];
-
-                // Assuming 'user_course_sessions' is your database table name
-                $DB->insert_record('user_course_sessions', $record);
-            }
-        }
+        return $courseActivities;
     }
 }
