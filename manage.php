@@ -1,46 +1,53 @@
 <?php
-require_once(__DIR__.'/../../config.php'); // Adjust the path as necessary to point to Moodle's config.php
-require_once($CFG->dirroot.'/local/attendance/lib.php'); // Adjust the path to your local plugin's library file
-
+require_once(__DIR__ . '/../../config.php'); 
+require_once($CFG->dirroot . '/local/attendance/lib.php'); 
 require_login();
 $context = context_system::instance();
-require_capability('moodle/site:config', $context); // Adjust required capability as necessary
+require_capability('moodle/site:config', $context); 
 
-$PAGE->set_url('/local/attendance/manage.php'); // Adjust URL as necessary
+$PAGE->set_url('/local/attendance/manage.php');
 $PAGE->set_context($context);
-$PAGE->set_title(get_string('pluginname', 'local_attendance'));
-//$PAGE->set_heading(get_string('activityreport', 'local_attendance'));
-
-echo $OUTPUT->header();
-//echo $OUTPUT->heading(get_string('activityreport', 'local_attendance'));
+$PAGE->set_title(get_string('pluginname', 'local_attendance')); 
+$PAGE->set_heading(get_string('activityreport', 'local_attendance')); 
 
 $attendance = new local_attendance();
-$activitySummary = $attendance->getUserCourseActivity();
+$userCourseAccess = $attendance->getUserCourseActivity();
 
-echo '<h3>User Activity</h3>';
-echo '<table border="1" style="width:100%">';
-echo '<tr>
-        <th>User ID</th>
-        <th>Username</th>
-        <th>Course Name</th>
-        <th>Date</th>
-        <th>Access Count</th>
-        <th>Total Time Spent (H:M:S)</th>
-      </tr>';
-foreach ($activitySummary as $userId => $courses) {
-    foreach ($courses as $courseId => $data) {
+echo $OUTPUT->header();
+
+echo '<h3>User Course Access Information</h3>';
+echo '<table class="generaltable">';
+echo '<thead>';
+echo '<tr>';
+echo '<th>User ID</th>';
+echo '<th>Username</th>';
+echo '<th>Course ID</th>';
+echo '<th>Course Name</th>';
+echo '<th>Date</th>';
+echo '<th>Session Start</th>';
+echo '<th>Session End</th>';
+echo '<th>Duration</th>';
+echo '</tr>';
+echo '</thead>';
+echo '<tbody>';
+
+
+foreach ($userCourseAccess as $accessKey => $access) {
+    foreach ($access['sessions'] as $session) {
         echo '<tr>';
-        echo '<td>'.htmlspecialchars($userId).'</td>';
-        echo '<td>'.htmlspecialchars($data['username']).'</td>'; 
-        echo '<td>'.htmlspecialchars($data['course_name']).'</td>';
-        echo '<td>'.htmlspecialchars($data['date']).'</td>';
-        echo '<td>'.htmlspecialchars($data['access_count']).'</td>';
-        echo '<td>'.htmlspecialchars($data['formatted_time_spent']).'</td>';
+        echo '<td>' . htmlspecialchars($access['userid']) . '</td>';
+        echo '<td>' . htmlspecialchars($access['username']) . '</td>';
+        echo '<td>' . htmlspecialchars($access['courseid']) . '</td>';
+        echo '<td>' . htmlspecialchars($access['course_name']) . '</td>';
+        echo '<td>' . htmlspecialchars($access['date']) . '</td>';
+        echo '<td>' . htmlspecialchars($session['start_time']) . '</td>';
+        echo '<td>' . htmlspecialchars($session['end_time']) . '</td>';
+        echo '<td>' . htmlspecialchars($session['duration']) . '</td>';
         echo '</tr>';
     }
 }
 
+echo '</tbody>';
 echo '</table>';
 
 echo $OUTPUT->footer();
-

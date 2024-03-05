@@ -22,13 +22,20 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-// local/attendance/lang/en/local_attendance.php
-
 $string['pluginname'] = 'Attendance Tracking';
 $string['activityreport'] = 'Activity Report';
 $string['userid'] = 'User ID';
-$string['username'] = 'Username'; 
+$string['username'] = 'Username';
 $string['coursename'] = 'Course Name';
-$string['activitycount'] = 'Activity Count';
-$string['totaltimespent'] = 'Total Time Spent (H:M:S)'; 
-$string['date'] = 'Date'; 
+$string['sessiondate'] = 'Session Date';
+$string['sessionstart'] = 'Session Start';
+$string['sessionend'] = 'Session End';
+
+$string['sessionduration'] = 'Duration';
+$string['accesscount'] = 'Access Count'; // If still relevant
+// Optionally remove or adjust if not used:
+// $string['totaltimespent'] = 'Total Time Spent (H:M:S)';
+// $string['date'] = 'Date'; // If 'sessiondate' supersedes this
+// $string['activities'] = 'Activities'; // Keep if activities are still tracked and displayed
+
+// Add any new strings or modify existing ones to better fit the new functionality
