@@ -5,23 +5,23 @@ class local_attendance {
         global $DB;
 
         $param = ['exclude_userid' => 2];
-
-        $sql = 'SELECT l.id AS log_event_id,
-                l.timecreated AS timestamp,
-                DATE_FORMAT(FROM_UNIXTIME(l.timecreated), \'%%d-%%m-%%y %%H:%%m:%%s\') AS time_utc,
-                DATE_FORMAT(FROM_UNIXTIME(l.timecreated), \'%%d-%%m-%%y\') AS date,
-                l.action,
-                u.username,
-                u.id AS userid,
-                c.id AS courseid,
-                c.fullname AS course_name,
-                l.origin,
-                l.ip
-            FROM mdl_logstore_standard_log l
-            JOIN mdl_user u ON u.id = l.userid
-            JOIN mdl_course c ON c.id = l.courseid
-            WHERE l.courseid != 0 AND l.userid != :exclude_userid
-            ORDER BY u.id, l.courseid, l.timecreated';
+        $sql = "SELECT l.id AS log_event_id,
+                       l.timecreated AS timestamp,
+                       FROM_UNIXTIME(l.timecreated, '%Y-%m-%d %H:%i:%s') AS time_utc,
+                       FROM_UNIXTIME(l.timecreated, '%H:%i:%s') AS time_only,
+                       FROM_UNIXTIME(l.timecreated, '%Y-%m-%d') AS date,
+                       l.action,
+                       u.username,
+                       u.id AS userid,
+                       c.id AS courseid,
+                       c.fullname AS course_name,
+                       l.origin,
+                       l.ip
+                FROM {logstore_standard_log} l
+                JOIN {user} u ON u.id = l.userid
+                JOIN {course} c ON c.id = l.courseid
+                WHERE l.courseid != 0 AND l.userid != :exclude_userid
+                ORDER BY l.userid, l.courseid, l.timecreated ASC";
 
         $activityData = $DB->get_records_sql($sql, $param);
         $userCourseAccess = [];
@@ -29,39 +29,47 @@ class local_attendance {
         foreach ($activityData as $activity) {
             $userId = $activity->userid;
             $courseId = $activity->courseid;
-            $userCourseKey = "{$userId}_{$courseId}";
+            $date = $activity->date;
+            $userCourseKey = $userId . '_' . $courseId;
 
-            
-            if (!isset($courseActivities[$userId][$courseId])) {
-                $courseActivities[$userId][$courseId] = [
-                    'username' => $username,
+            if (!isset($userCourseAccess[$userCourseKey])) {
+                $userCourseAccess[$userCourseKey] = [
+                    'userid' => $userId,
+                    'username' => $activity->username,
+                    'courseid' => $courseId,
                     'course_name' => $activity->course_name,
-                    'access_count' => 0,
-                    'total_time_spent' => 0, 
-                    'date' => $date 
+                    'sessions' => [],
                 ];
-                $lastActivityTime[$userId][$courseId] = $timestamp;
             }
-            $courseActivities[$userId][$courseId]['access_count']++;
-            if (isset($lastActivityTime[$userId][$courseId])) {
-                $timeDiff = $timestamp - $lastActivityTime[$userId][$courseId];
-                $maxIdleTime = 3600;
-                if ($timeDiff < $maxIdleTime) 
-                {
-                    $courseActivities[$userId][$courseId]['total_time_spent'] += $timeDiff;
-                }
+
+            $sessions = &$userCourseAccess[$userCourseKey]['sessions'];
+
+            // Check for a new session or continuation of an existing one
+            if (empty($sessions) || $activity->timestamp - end($sessions)['end_timestamp'] > 1800) {
+                // New session
+                $sessions[] = [
+                    'date' => $date,
+                    'start_time' => $activity->time_only,
+                    'end_time' => $activity->time_only, // Initially the same, will update
+                    'start_timestamp' => $activity->timestamp,
+                    'end_timestamp' => $activity->timestamp, // Initially the same, will update
+                ];
+            } else {
+                // Continuing an existing session, update the end time
+                $lastKey = key(array_slice($sessions, -1, 1, TRUE));
+                $sessions[$lastKey]['end_time'] = $activity->time_only;
+                $sessions[$lastKey]['end_timestamp'] = $activity->timestamp;
             }
-            $lastActivityTime[$userId][$courseId] = $timestamp;
         }
-        foreach ($courseActivities as $userId => $courses) {
-            foreach ($courses as $courseId => $summary) {
-                $totalSeconds = $summary['total_time_spent'];
-                $hours = floor($totalSeconds / 3600);
-                $minutes = floor(($totalSeconds / 60) % 60);
-                $seconds = $totalSeconds % 60;
-                $courseActivities[$userId][$courseId]['formatted_time_spent'] = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
+
+        // Calculate session durations
+        foreach ($userCourseAccess as &$userCourse) {
+            foreach ($userCourse['sessions'] as &$session) {
+                $durationSeconds = $session['end_timestamp'] - $session['start_timestamp'];
+                $session['duration'] = gmdate('H:i:s', $durationSeconds);
             }
         }
-        return $courseActivities;
+
+        return $userCourseAccess;
     }
 }
