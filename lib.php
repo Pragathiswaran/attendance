@@ -5,6 +5,7 @@ class local_attendance {
         global $DB;
 
         $param = ['exclude_userid' => 2];
+
         $sql = "SELECT l.id AS log_event_id,
                        l.timecreated AS timestamp,
                        FROM_UNIXTIME(l.timecreated, '%Y-%m-%d %H:%i:%s') AS time_utc,
@@ -24,13 +25,13 @@ class local_attendance {
                 ORDER BY l.userid, l.courseid, l.timecreated ASC";
 
         $activityData = $DB->get_records_sql($sql, $param);
-        $userCourseAccess = [];
 
+        $userCourseAccess = [];
         foreach ($activityData as $activity) {
             $userId = $activity->userid;
             $courseId = $activity->courseid;
             $date = $activity->date;
-            $userCourseKey = $userId . '_' . $courseId;
+            $userCourseKey = "{$userId}_{$courseId}";
 
             if (!isset($userCourseAccess[$userCourseKey])) {
                 $userCourseAccess[$userCourseKey] = [
@@ -44,25 +45,24 @@ class local_attendance {
 
             $sessions = &$userCourseAccess[$userCourseKey]['sessions'];
 
-            // Check for a new session or continuation of an existing one
-            if (empty($sessions) || $activity->timestamp - end($sessions)['end_timestamp'] > 1800) {
-                // New session
+            $sessionGap = 600; 
+            if (empty($sessions) || $activity->timestamp - end($sessions)['end_timestamp'] > $sessionGap) {
                 $sessions[] = [
                     'date' => $date,
                     'start_time' => $activity->time_only,
-                    'end_time' => $activity->time_only, // Initially the same, will update
+                    'end_time' => $activity->time_only, 
                     'start_timestamp' => $activity->timestamp,
-                    'end_timestamp' => $activity->timestamp, // Initially the same, will update
+                    'end_timestamp' => $activity->timestamp,
                 ];
             } else {
-                // Continuing an existing session, update the end time
-                $lastKey = key(array_slice($sessions, -1, 1, TRUE));
-                $sessions[$lastKey]['end_time'] = $activity->time_only;
-                $sessions[$lastKey]['end_timestamp'] = $activity->timestamp;
+            
+                $lastSessionKey = array_key_last($sessions);
+                $sessions[$lastSessionKey]['end_time'] = $activity->time_only;
+                $sessions[$lastSessionKey]['end_timestamp'] = $activity->timestamp;
             }
         }
 
-        // Calculate session durations
+
         foreach ($userCourseAccess as &$userCourse) {
             foreach ($userCourse['sessions'] as &$session) {
                 $durationSeconds = $session['end_timestamp'] - $session['start_timestamp'];
