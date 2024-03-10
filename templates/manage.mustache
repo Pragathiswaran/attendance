@@ -1,25 +1,26 @@
-<!-- local/attendance/templates/activity_summary.mustache -->
+<!-- local/attendance/templates/manage.mustache -->
 
-<h3>{{#str}}activityreport, local_attendance{{/str}}</h3>
-<table class="table table-bordered" style="width:100%">
-    <thead>
+<h3>{{#str}}username,local_attendance{{/str}}</h3>
+<table class="generaltable">
         <tr>
-            <th>{{#str}}userid, local_attendance{{/str}}</th>
-            <th>{{#str}}coursename, local_attendance{{/str}}</th>
-            <th>{{#str}}accesscount, local_attendance{{/str}}</th>
-            <th>{{#str}}totaltimespent, local_attendance{{/str}}</th>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Duration</th>
         </tr>
-    </thead>
-    <tbody>
-        {{#users}}
+        {{#dateWiseAccess}}
         <tr>
             <td>{{userid}}</td>
+            <td>{{username}}</td>
+            <td>{{courseid}}</td>
             <td>{{course_name}}</td>
-            <td>{{access_count}}</td> <!-- Adjusted for consistency -->
-            <td>{{total_time_spent_formatted}}</td>
+            <td>{{start}}</td>
+            <td>{{end}}</td>
+            <td>{{duration}}</td>
         </tr>
-        {{/users}}
-    </tbody>
+        {{/dateWiseAccess}}
 </table>
 
-<button type="button" class="btn btn-outline-primary">{{#str}}primarybutton, local_attendance{{/str}}</button>
