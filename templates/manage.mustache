@@ -1,13 +1,16 @@
 <!-- local/attendance/templates/activity_summary.mustache -->
 
-<h3>{{#str}}activityreport, local_attendance{{/str}}</h3>
-<table class="table table-bordered" style="width:100%">
+
+<table class="generaltable">
     <thead>
         <tr>
             <th>{{#str}}userid, local_attendance{{/str}}</th>
+            <th>{{#str}}username, local_attendance{{/str}}</th>
+            <th>{{#str}}courseid, local_attendance{{/str}}</th>
             <th>{{#str}}coursename, local_attendance{{/str}}</th>
-            <th>{{#str}}accesscount, local_attendance{{/str}}</th>
-            <th>{{#str}}totaltimespent, local_attendance{{/str}}</th>
+            <th>{{#str}}sessionstart, local_attendance{{/str}}</th>
+            <th>{{#str}}sessionend, local_attendance{{/str}}</th>
+            <th>{{#str}}sessionduration, local_attendance{{/str}}</th>
         </tr>
     </thead>
     <tbody>
@@ -22,4 +25,3 @@
     </tbody>
 </table>
 
-<button type="button" class="btn btn-outline-primary">{{#str}}primarybutton, local_attendance{{/str}}</button>

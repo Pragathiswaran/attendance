@@ -15,51 +15,20 @@ echo $OUTPUT->header();
 
 $attendance = new local_attendance();
 $userCourseAccess = $attendance->getUserCourseActivity();
+// echo "<pre>";
+// print_r($userCourseAccess);
+// echo "</pre>";
+// $dateWiseAccess = [];
+// foreach ($userCourseAccess as $userCourseKey => $access) {
+//     foreach ($access['sessions'] as $session) {
+//     }
+// }
 
-$dateWiseAccess = [];
-foreach ($userCourseAccess as $userCourseKey => $access) {
-    foreach ($access['sessions'] as $session) {
-        $date = $session['date'];
-        if (!isset($dateWiseAccess[$date])) {
-            $dateWiseAccess[$date] = [];
-        }
-        $dateWiseAccess[$date][] = $session + ['username' => $access['username'], 'userid' => $access['userid'], 'courseid' => $access['courseid'], 'course_name' => $access['course_name']];
-    }
-}
+// ksort($dateWiseAccess);
 
-ksort($dateWiseAccess);
-
-foreach ($dateWiseAccess as $date => $sessions) {
-    // echo "<h4>Date: " . htmlspecialchars($date) . "</h4>";
-    // echo '<table border="1" style="width:100%;">';
-    // echo '<thead>';
-    // echo '<tr>
-    //         <th>User ID</th>
-    //         <th>Username</th>
-    //         <th>Course ID</th>
-    //         <th>Course Name</th>
-    //         <th>Start</th>
-    //         <th>End</th>
-    //         <th>Duration</th>
-    //       </tr>';
-    // echo '</thead>';
-    // echo '<tbody>';
-
-    // foreach ($sessions as $session) {
-    //     echo '<tr>';
-    //     echo '<td>'.htmlspecialchars($session['userid']).'</td>';
-    //     echo '<td>'.htmlspecialchars($session['username']).'</td>';
-    //     echo '<td>'.htmlspecialchars($session['courseid']).'</td>';
-    //     echo '<td>'.htmlspecialchars($session['course_name']).'</td>';
-    //     echo '<td>'.htmlspecialchars($session['start_time']).'</td>';
-    //     echo '<td>'.htmlspecialchars($session['end_time']).'</td>';
-    //     echo '<td>'.htmlspecialchars($session['duration']).'</td>';
-    //     echo '</tr>';
-    // }
-
-    // echo '</tbody>';
-    // echo '</table><br>';
-}
-echo $OUTPUT->render_from_template('local_attendance/manage', ['dateWiseAccess' => $dateWiseAccess]);
+// foreach ($dateWiseAccess as $date => $sessions) {
+   
+// }
+//echo $OUTPUT->render_from_template('local_attendance/manage', ['dateWiseAccess' => $dateWiseAccess]);
 
 echo $OUTPUT->footer();

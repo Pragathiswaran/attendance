@@ -26,6 +26,7 @@ $string['report'] = 'Comprehensive Activity Report';
 $string['userid'] = 'User Identification Number';
 $string['username'] = 'User Name';
 $string['coursename'] = 'Name of the Course';
+$string['courseid'] = 'Course ID';
 $string['sessiondate'] = 'Date of Session';
 $string['sessionstart'] = 'Start Time of Session';
 $string['sessionend'] = 'End Time of Session';
