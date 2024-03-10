@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="local/attendance/db" VERSION="20130407" COMMENT="XMLDB file for local attendance plugin"
+<XMLDB PATH="local/attendance/db" VERSION="20130408" COMMENT="XMLDB file for local attendance plugin"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >

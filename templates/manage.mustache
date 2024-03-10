@@ -1,27 +1,25 @@
+<!-- local/attendance/templates/activity_summary.mustache -->
 
-    <!-- local/attendance/templates/activity_summary.mustache -->
-<link rel="stylesheet" type="text/css" href="./style.css" />
-<table border="1">
-    <tr>
-        <th>{{#str}}userid, local_attendance{{/str}}</th>
-        <th>{{#str}}username, local_attendance{{/str}}</th>
-        <th>{{#str}}coursename, local_attendance{{/str}}</th>
-        <th>{{#str}}date, local_attendance{{/str}}</th>
-        <th>{{#str}}activitycount, local_attendance{{/str}}</th>
-        <th>{{#str}}totaltimespent, local_attendance{{/str}}</th>
-    </tr>
-    {{#result}}
-        
-    <tr>
-        <td>{{userid}}</td>
-        <td>{{username}}</td>
-        <td>{{course_name}}</td>
-        <td>{{date}}</td>
-        <td>{{access_count}}</td>
-        <td>{{formatted_time_spent}}</td>
-    </tr>
-       
-    {{/result}}
+<h3>{{#str}}activityreport, local_attendance{{/str}}</h3>
+<table class="table table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>{{#str}}userid, local_attendance{{/str}}</th>
+            <th>{{#str}}coursename, local_attendance{{/str}}</th>
+            <th>{{#str}}accesscount, local_attendance{{/str}}</th>
+            <th>{{#str}}totaltimespent, local_attendance{{/str}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#users}}
+        <tr>
+            <td>{{userid}}</td>
+            <td>{{course_name}}</td>
+            <td>{{access_count}}</td> <!-- Adjusted for consistency -->
+            <td>{{total_time_spent_formatted}}</td>
+        </tr>
+        {{/users}}
+    </tbody>
 </table>
 
-<button type="button" class="btn btn-outline-primary">Primary</button>
+<button type="button" class="btn btn-outline-primary">{{#str}}primarybutton, local_attendance{{/str}}</button>
