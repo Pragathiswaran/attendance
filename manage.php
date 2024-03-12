@@ -14,30 +14,8 @@ $PAGE->set_heading(get_string('pluginname', 'local_attendance'));
 echo $OUTPUT->header();
 
 $attendance = new local_attendance();
-$userCourseAccess = $attendance->getUserCourseActivity();
-// echo "<pre>";
-// print_r($userCourseAccess);
-// echo "<pre>";
-$mergedSessions = [];
-foreach ($userCourseAccess as $entries) {
-    $data = [
-        'courseid' => $entries['courseid'],
-        'coursename' => $entries['course_name'],
-        'userid' => $entries['userid'],
-        'username' => $entries['username'],
-    ];
-    foreach($entries['sessions'] as $session) {
-    $data1=['date' => $session['date'],
-        'start_time' => $session['start_time'],
-        'end_time' => $session['end_time'],
-        'duration' => $session['duration']];   
-    }
-    $mergedSessions = array_merge($mergedSessions, $data,$data1);
-}
+$userCourseAccess = $attendance->ShowData();
 
-// echo "<pre>";
-// print_r($mergedSessions);
-// echo "<pre>";
-echo $OUTPUT->render_from_template('local_attendance/manage', ['dateWiseAccess' => $mergedSessions]);
+echo $OUTPUT->render_from_template('local_attendance/manage', ['dateWiseAccess' => $userCourseAccess]);
 
 echo $OUTPUT->footer();

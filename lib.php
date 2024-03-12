@@ -1,7 +1,7 @@
 <?php
 
 class local_attendance {
-    public function getUserCourseActivity() {
+    private function getUserCourseActivity() {
         global $DB;
 
         $param = ['exclude_userid' => 2];
@@ -44,7 +44,7 @@ class local_attendance {
             }
 
             $sessions = &$userCourseAccess[$userCourseKey]['sessions'];
-
+           
             $sessionGap = 600; 
             if (empty($sessions) || $activity->timestamp - end($sessions)['end_timestamp'] > $sessionGap) {
                 $sessions[] = [
@@ -71,5 +71,31 @@ class local_attendance {
         }
 
         return $userCourseAccess;
+       // return $activityData;
+    }
+
+    public function ShowData() {
+        $userCourseAccess = $this->getUserCourseActivity();
+        $showData = [];
+        foreach ($userCourseAccess as $entries => $value) {
+            foreach($value['sessions'] as $entry){
+                $showData[] = [
+                    'userid' => $value['userid'],
+                    'username' => $value['username'],
+                    'courseid' => $value['courseid'],
+                    'coursename' => $value['course_name'],
+                    'date' => $entry['date'],
+                    'start_time' => $entry['start_time'],
+                    'end_time' => $entry['end_time'],
+                    'start_timestamp' => $entry['start_timestamp'],
+                    'end_timestamp' => $entry['end_timestamp'],
+                    'duration' => $entry['duration']
+                ];  
+            }
+            
+        }
+
+        return $showData;
     }
 }
+
