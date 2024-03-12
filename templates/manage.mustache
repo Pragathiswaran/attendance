@@ -8,20 +8,25 @@
             <th>{{#str}}username, local_attendance{{/str}}</th>
             <th>{{#str}}courseid, local_attendance{{/str}}</th>
             <th>{{#str}}coursename, local_attendance{{/str}}</th>
+            <th>{{#str}}sessiondate, local_attendance{{/str}}</th>
             <th>{{#str}}sessionstart, local_attendance{{/str}}</th>
             <th>{{#str}}sessionend, local_attendance{{/str}}</th>
             <th>{{#str}}sessionduration, local_attendance{{/str}}</th>
         </tr>
     </thead>
     <tbody>
-        {{#users}}
+        {{#dateWiseAccess}}
         <tr>
             <td>{{userid}}</td>
-            <td>{{course_name}}</td>
-            <td>{{access_count}}</td> <!-- Adjusted for consistency -->
-            <td>{{total_time_spent_formatted}}</td>
+            <td>{{username}}</td>
+            <td>{{courseid}}</td>
+            <td>{{coursename}}</td>
+            <td>{{date}}</td>
+            <td>{{start_time}}</td> <!-- Adjusted for consistency -->
+            <td>{{end_time}}</td>
+            <td>{{duration}}</td>
         </tr>
-        {{/users}}
+        {{/dateWiseAccess}}
     </tbody>
 </table>
 

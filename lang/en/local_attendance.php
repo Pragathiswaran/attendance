@@ -23,7 +23,8 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Enhanced Attendance Tracking';
 $string['report'] = 'Comprehensive Activity Report';
-$string['userid'] = 'User Identification Number';
+$string['userid'] = 'User Id';
+$string['user'] = 'User Id';
 $string['username'] = 'User Name';
 $string['coursename'] = 'Name of the Course';
 $string['courseid'] = 'Course ID';
