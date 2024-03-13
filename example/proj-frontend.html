@@ -5,83 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>project</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="./js/bootstrap.min.js"></script>
         <script src="./js/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
+      <h1>hello</h1>
                     <button type="button" class="btn btn-primary" style="margin-top:60px; margin-left:200px; ">Copy</button>
                     <button type="button" class="btn btn-warning" style="margin-top:60px; margin-left:10px;">CSV</button>
                     <button type="button" class="btn btn-danger"style="margin-top:60px;margin-left:10px;">Excel</button>
                     <button type="button" class="btn btn-success"style="margin-top:60px;margin-left:10px;">PDF</button>
                     <button type="button" class="btn btn-info"style="margin-top:60px;margin-left:10px;">Print</button>
-        <input type="text" id="myInput" placeholder="Search.." style="margin-top:50px;margin-left:280px; padding-left:5px; border-radius:4px solid black; height:27px;">
-        <table class="table table-bordered table-striped table-condensed" style="margin-top:50px; background-color:rgb(196, 227, 244);">
+                    <div class="container">
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="btn-group">
+                                  <button class="btn btn-primary" style="margin-top:50px; margin-left:950px;">courses</button>
+                              <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="margin-top:50px;"><span class="caret" ></span></button>
+                              <ul class="dropdown-menu" role="menu">
+                                  <li><a href="#" style="padding-left:10px;">Java</a></li>
+                                  <li><a href="#" style="padding-left:10px;">python</a></li>
+                                  <li><a href="#" style="padding-left:10px;">sql</a></li>
+                              </ul>
+                          </div>
+                      </div>
+                            
+                              </div>
+                  </div>
+                    <div>
+                  <input type="text" id="myInput"  placeholder="Search..." style="margin-top:20px;margin-left:880px; padding-left:8px; border-radius:20px solid black; height:35px;">
+                    </div>
+                    <h4 style="margin-top:12px; font-family:serif;">COURSE NAME : JAVA</h4>
+        <table class="table table-bordered table-striped table-condensed" style="margin-top:50px; background-color:rgb(254, 255, 255);">
           <thead>
             <tr>
+              <th>Date</th>
                 <th>userid</th>
                 <th>username</th>
                 <th>courseid</th>
-                <th>coursename</th>
                 <th>gmail</th>
-                <th>phoneno</th>
-                <th>place</th>
+                <th>login</th>
+                <th>logout</th>
+                <th>sessionin</th>
+                <th>sessionout</th>
+
             </tr>
           </thead>
             <tbody id="myTable">
                 <tr>
+                  <td>31-08-2023</td>
                     <td>1</td>
                     <td>Ramya</td>
                     <td>10</td>
-                    <td>java</td>
                     <td>ramya@gmail.com</td>
-                    <td>9345747533</td>
-                    <td>chennai</td>
+                    <td>00.00.00</td>
+                    <td>00.12.45</td>
+                    <td>00.00.00</td>
+                    <td>00.02.15</td>
                 </tr>
                 <tr>
+                  <td>09-08-2023</td>
                     <td>2</td>
-                    <td>Ram</td>
+                    <td>Pragathiswaran</td>
                     <td>10</td>
-                    <td>java</td>
                     <td>ram@gmail.com</td>
-                    <td>9345769325</td>
-                    <td>chennai</td>
+                    <td>00.00.00</td>
+                    <td>00.02.15</td>
+                    <td>00.00.00</td>
+                    <td>00.45.18</td>
                 </tr>
                 <tr>
+                  <td>12-02-2024</td>
                     <td>3</td>
-                    <td>sam</td>
+                    <td>Rukkesh</td>
                     <td>10</td>
-                    <td>java</td>
                     <td>sam@gmail.com</td>
-                    <td>8025710268</td>
-                    <td>bangalore</td>
+                    <td>00.00.00</td>
+                    <td>00.45.18</td>
+                    <td>00.00.00</td>
+                    <td>00.30.01</td>
                 </tr>
                 <tr>
+                  <td>15-06-2023</td>
                     <td>4</td>
-                    <td>sowmiya</td>
+                    <td>Mathi</td>
                     <td>10</td>
-                    <td>java</td>
                     <td>sowmiya@gmail.com</td>
-                    <td>9901455889</td>
-                    <td>chennai</td>
+                    <td>00.00.00</td>
+                    <td>00.30.01</td>
+                    <td>00.00.00</td>
+                    <td>00.07.06</td>
                 </tr>
                 <tr>
+                  <td>15-06-2023</td>
                     <td>5</td>
                     <td>leela</td>
                     <td>10</td>
-                    <td>java</td>
                     <td>sri@gmail.com</td>
-                    <td>8072217057</td>
-                    <td>chennai</td>
+                    <td>00.00.00</td>
+                    <td>00.07.06</td>
+                    <td>00.00.00</td>
+                    <td>00.12.45</td>
                 </tr>
             </tbody>
             </table>
         </div>
         <script>
-            $(document).ready(function(){
-              $("#myInput").on("keyup", function() {
+            $(document).ready(function()
+            {
+              $("#myInput").on("keyup", function() 
+              {
                 var value = $(this).val().toLowerCase();
-                $("#myTable tr").filter(function() {
+                $("#myTable tr").filter(function()
+                 {
                   $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
               });
