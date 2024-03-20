@@ -36,10 +36,11 @@ $PAGE->set_heading(get_string('pluginname', 'local_attendance'));
 echo $OUTPUT->header();
 
 $attendance = new local_attendance();
-$userCourseAccess = $attendance->quizAttempt();
+// $userCourseAccess = $attendance->quizAttempt();
 // $userCourseAccess = $attendance->ShowData();
-// $userCourseAccess = $attendance->assignment();
+$userCourseAccess = $attendance->assignment();
 // echo $OUTPUT->render_from_template('local_attendance/manage', ['dateWiseAccess' => $userCourseAccess]);
-echo $OUTPUT->render_from_template('local_attendance/quiz', ['quizData' => $userCourseAccess]);
+// echo $OUTPUT->render_from_template('local_attendance/quiz', ['quizData' => $userCourseAccess]);
+echo $OUTPUT->render_from_template('local_attendance/assignment', ['assignmentData' => $userCourseAccess]);
 
 echo $OUTPUT->footer();

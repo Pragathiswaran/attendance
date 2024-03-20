@@ -143,10 +143,6 @@ class local_attendance {
         // $sql = 'SELECT * FROM mdl_quiz_attempts;';
 
         $quiz = $DB->get_records_sql($sql,$param);
-        
-        // echo'<pre>';
-        // print_r($quiz);
-        // echo'</pre>';
 
         $quizData = [];
 
@@ -169,25 +165,69 @@ class local_attendance {
             ];
         }
 
-        // echo'<pre>';
-        // print_r($quizData);
-        // echo'</pre>';
-
         return $quizData;
     }
 
     public function assignment(){
-        global $DB;
+        global $DB; 
+        
+        $sqli = 'SELECT 
+        a.id AS assign_id,
+        a.`course`,
+        c.fullname AS coursename,
+        a.`name`,
+        a.`intro`,
+        a.duedate,
+        a.allowsubmissionsfromdate,
+        ag.assignment,
+        ag.userid,
+        u.username,
+        ag.timecreated,
+        ag.timemodified,
+        FROM_UNIXTIME(a.duedate, "%Y-%m-%d") AS duedate_utc,
+        FROM_UNIXTIME(a.allowsubmissionsfromdate, "%Y-%m-%d") AS submission_utc,
+        FROM_UNIXTIME(ag.timecreated, "%Y-%m-%d %H:%i:%s") AS timecreated_utc,
+        FROM_UNIXTIME(ag.timemodified, "%Y-%m-%d %H:%i:%s") AS timemodified_utc
+    FROM 
+        mdl_assign a
+    LEFT JOIN 
+        mdl_assign_grades ag ON a.id = ag.assignment
+    LEFT JOIN 
+        mdl_user u ON ag.userid = u.id
+    LEFT JOIN 
+        mdl_course c ON a.`course` = c.id;
+    ';
 
-        $sql = 'SELECT course, duedate, allowsubmissionsfromdate,
-        FROM_UNIXTIME(duedate, "%Y-%m-%d %H:%i:%s") AS duedate_utc,
-        FROM_UNIXTIME(allowsubmissionsfromdate, "%Y-%m-%d %H:%i:%s") AS allowsubmissionsfromdate_utc
-        FROM mdl_assign;
-        ';
-        $assignment = $DB->get_records_sql($sql);
-        echo'<pre>';
-        print_r($assignment);
-        echo'</pre>';
-    } 
+        $assignments = $DB->get_records_sql($sqli);
+
+        
+        $assignmentData = [];
+        
+        foreach ($assignments as $entries => $value) {
+        
+            $startTime = new DateTime($value->timecreated_utc);
+            $finishTime = new DateTime($value->timemodified_utc);
+            $duration = $startTime->diff($finishTime)->format('%H:%i:%s');
+        
+            $assignmentData[] = [
+                'userid' => $value->userid,
+                'username' => $value->username,
+                'course' => $value->course,
+                'coursename' => $value->coursename,
+                'name' => $value->name,
+                'duedate' => $value->duedate_utc,
+                'submission' => $value->submission_utc,
+                'timecreated' => $startTime->format('H:i:s'),
+                'timemodified' => $finishTime->format('H:i:s'),
+                "duration" => $duration
+            ];
+        }
+        
+        // echo "<pre>";
+        // print_r($assignmentData);
+        // echo "</pre>";
+
+        return $assignmentData;
+    }
 }
 
