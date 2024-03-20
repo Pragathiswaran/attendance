@@ -1,5 +1,27 @@
 <?php
 
+// This file is part of Moodle Course Rollover Plugin
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * @package     local_attendance
+ * @author      Prgathiswaran
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @var stdClass $plugin
+ */
+
 class local_attendance {
     private function getUserCourseActivity() {
         global $DB;
@@ -97,5 +119,75 @@ class local_attendance {
 
         return $showData;
     }
+
+    public function quizAttempt(){
+        global $DB;
+
+        $sql ='SELECT qa.id AS attempt_id,
+        qa.timestart,
+        qa.timefinish,
+        FROM_UNIXTIME(qa.timestart, "%Y-%m-%d") AS date_utc,
+        FROM_UNIXTIME(qa.timestart, "%Y-%m-%d %H:%i:%s") AS timestart_utc,
+        FROM_UNIXTIME(qa.timefinish, "%Y-%m-%d %H:%i:%s") AS timefinish_utc,
+        qa.userid,
+        u.username,
+        q.name AS quiz_name,
+        c.fullname AS course_name
+        FROM mdl_quiz_attempts qa
+        JOIN mdl_user u ON qa.userid = u.id
+        JOIN mdl_quiz q ON qa.quiz = q.id
+        JOIN mdl_course c ON q.course = c.id
+        WHERE c.id = :your_course_id;';
+
+        $param = ['your_course_id' => 2];
+        // $sql = 'SELECT * FROM mdl_quiz_attempts;';
+
+        $quiz = $DB->get_records_sql($sql,$param);
+        
+        // echo'<pre>';
+        // print_r($quiz);
+        // echo'</pre>';
+
+        $quizData = [];
+
+        
+        foreach ($quiz as $entries => $value) {
+
+            $startTime = new DateTime($value->timestart_utc);
+            $finishTime = new DateTime($value->timefinish_utc);
+
+            $duration = $startTime->diff($finishTime)->format('%H:%i:%s');
+            $quizData[] = [
+                'userid' => $value->userid,
+                'username' => $value->username,
+                'course_name' => $value->course_name,
+                'quiz_name' => $value->quiz_name,
+                'date' => $value->date_utc,
+                'timestart' => $startTime->format('H:i:s'),
+                'timefinish' =>$finishTime->format('H:i:s'),
+                'duration' => $duration
+            ];
+        }
+
+        // echo'<pre>';
+        // print_r($quizData);
+        // echo'</pre>';
+
+        return $quizData;
+    }
+
+    public function assignment(){
+        global $DB;
+
+        $sql = 'SELECT course, duedate, allowsubmissionsfromdate,
+        FROM_UNIXTIME(duedate, "%Y-%m-%d %H:%i:%s") AS duedate_utc,
+        FROM_UNIXTIME(allowsubmissionsfromdate, "%Y-%m-%d %H:%i:%s") AS allowsubmissionsfromdate_utc
+        FROM mdl_assign;
+        ';
+        $assignment = $DB->get_records_sql($sql);
+        echo'<pre>';
+        print_r($assignment);
+        echo'</pre>';
+    } 
 }
 

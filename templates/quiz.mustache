@@ -1,0 +1,28 @@
+<table class="generaltable">
+    <thead>
+        <tr>
+            <th>{{#str}}userid, local_attendance{{/str}}</th>
+            <th>{{#str}}username, local_attendance{{/str}}</th>
+            <th>{{#str}}coursename, local_attendance{{/str}}</th>
+            <th>Quiz Name</th>
+            <th>Date</th>
+            <th>Time Start</th>
+            <th>Time End</th>
+            <th>Duration</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#quizData}}
+        <tr>
+            <td>{{userid}}</td>
+            <td>{{username}}</td>
+            <td>{{course_name}}</td>
+            <td>{{quiz_name}}</td>
+            <td>{{date}}</td>
+            <td>{{timestart}}</td> <!-- Adjusted for consistency -->
+            <td>{{timefinish}}</td>
+            <td>{{duration}}</td>
+        </tr>
+        {{/quizData}}
+    </tbody>
+</table>
