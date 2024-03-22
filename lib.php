@@ -231,3 +231,20 @@ class local_attendance {
     }
 }
 
+function local_attendance_extend_navigation(global_navigation $navigation)
+{
+    // Check if the current user has the capability to configure the site
+    if (!has_capability('moodle/site:config', context_system::instance())) {
+        return; // If the user doesn't have the capability, exit the function
+    }
+
+    // Add a new node to the global navigation menu
+    $main_node = $navigation->add("Report", '/local/attendance/manage.php/');
+
+    // Set properties for the newly added node
+    $main_node->nodetype = 1;
+    $main_node->collapse = false;
+    $main_node->forceopen = true;
+    $main_node->isexpandable = false;
+    $main_node->showinflatnavigation = true;
+}

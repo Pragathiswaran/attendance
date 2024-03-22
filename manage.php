@@ -32,15 +32,16 @@ $PAGE->set_url(new moodle_url('/local/attendance/manage.php'));
 $PAGE->set_context($context);
 $PAGE->set_title(get_string('pluginname', 'local_attendance'));
 $PAGE->set_heading(get_string('pluginname', 'local_attendance'));
+// $PAGE->navigation("Report", new moodle_url('/local/attendance/manage.php'));
 
 echo $OUTPUT->header();
 
 $attendance = new local_attendance();
-// $userCourseAccess = $attendance->quizAttempt();
+$userCourseAccess = $attendance->quizAttempt();
 // $userCourseAccess = $attendance->ShowData();
-$userCourseAccess = $attendance->assignment();
+// $userCourseAccess = $attendance->assignment();
 // echo $OUTPUT->render_from_template('local_attendance/manage', ['dateWiseAccess' => $userCourseAccess]);
-// echo $OUTPUT->render_from_template('local_attendance/quiz', ['quizData' => $userCourseAccess]);
-echo $OUTPUT->render_from_template('local_attendance/assignment', ['assignmentData' => $userCourseAccess]);
+echo $OUTPUT->render_from_template('local_attendance/quiz', ['quizData' => $userCourseAccess]);
+// echo $OUTPUT->render_from_template('local_attendance/assignment', ['assignmentData' => $userCourseAccess]);
 
 echo $OUTPUT->footer();
