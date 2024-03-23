@@ -35,3 +35,4 @@ $string['sessionduration'] = 'Session Duration';
 $string['accesscount'] = 'Number of Accesses';
 $string['newfeature'] = 'Description of new feature';
 $string['totaltimespent'] = 'Total Duration (HH:MM:SS)';
+$string['reports'] = 'Reports';

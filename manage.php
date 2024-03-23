@@ -22,7 +22,23 @@
  */
 
 require_once(__DIR__.'/../../config.php'); 
-require_once($CFG->dirroot.'/local/attendance/lib.php'); 
+// require_once($CFG->dirroot.'/local/attendance/classes/quiz.class.php'); 
+// require_once($CFG->dirroot.'/local/attendance/classes/course.class.php'); 
+// require_once($CFG->dirroot.'/local/attendance/classes/assignment.class.php'); 
+// require_once($CFG->dirroot.'/local/attendance/classes/access.class.php');
+
+
+$folderPath = $CFG->dirroot.'/local/attendance/classes/';
+
+$directory = opendir($folderPath);
+
+while ($file = readdir($directory)) {
+   
+    if (pathinfo($file, PATHINFO_EXTENSION) == 'php') {
+       
+        require_once $folderPath . $file;
+    }
+}
 
 require_login();
 $context = context_system::instance();
@@ -36,7 +52,7 @@ $PAGE->set_heading(get_string('pluginname', 'local_attendance'));
 
 echo $OUTPUT->header();
 
-$attendance = new local_attendance();
+$attendance = new quiz();
 $userCourseAccess = $attendance->quizAttempt();
 // $userCourseAccess = $attendance->ShowData();
 // $userCourseAccess = $attendance->assignment();
