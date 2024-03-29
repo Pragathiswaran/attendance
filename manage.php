@@ -57,7 +57,8 @@ $userCourseAccess = $attendance->quizAttempt();
 // $userCourseAccess = $attendance->ShowData();
 // $userCourseAccess = $attendance->assignment();
 // echo $OUTPUT->render_from_template('local_attendance/manage', ['dateWiseAccess' => $userCourseAccess]);
-echo $OUTPUT->render_from_template('local_attendance/quiz', ['quizData' => $userCourseAccess]);
+//echo $OUTPUT->render_from_template('local_attendance/quiz', ['quizData' => $userCourseAccess]);
+echo $OUTPUT->render_from_template('local_attendance/render',"hello");
 // echo $OUTPUT->render_from_template('local_attendance/assignment', ['assignmentData' => $userCourseAccess]);
 
 echo $OUTPUT->footer();
