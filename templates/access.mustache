@@ -1,0 +1,28 @@
+
+<table class="generaltable">
+    <thead>
+        <tr>
+            <th>Log_event_id</th>
+            <th>timestamp</th>
+            <th>time_utc</th>
+            <th>action</th>
+            <th>username</th>
+            <th>origin</th>
+            <th>ip</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#accessData}}
+        <tr>
+            <td>{{log_event_id}}</td>
+            <td>{{timestamp}}</td>
+            <td>{{time_utc}}</td>
+            <td>{{action}}</td>
+            <td>{{username}}</td>
+            <td>{{origin}}</td>
+            <td>{{ip}}</td>
+        </tr>
+    {{/accessData}}
+    </tbody>
+
+</table>

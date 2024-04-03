@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+
 <style>
     #myInput {
       padding: 20px;
@@ -27,70 +18,64 @@
     </style>
 <body>
 <div class="container">
-    <h1 style="font-family: Arial, sans-serif; font-size:30px; margin-right:2px;float-left;">Quiz Activity Report 
+    <div style="font-family: Arial, sans-serif; font-size:30px; margin-right:2px;float-left;">Quiz Activity Report 
       <div class="btn-group float-right">
         <div class="btn-group">
-      <button class="btn btn-warning float-right" type="button" data-toggle="dropdown" style="border-radius:3px; padding-top:7px; margin-right:7px;">
-      <span class="glyphicon glyphicon-filter style="padding-right:5px; padding-top:2px;"></span>Filter
-      <span class="caret"></span></button>
-      <ul class="dropdown-menu">
-      <input class="form-control" id="myInput" type="text" placeholder="Type to Filter..">
-      </ul> 
-    </div>
-
+          <button class="btn btn-warning float-right" type="button" data-toggle="dropdown" style="border-radius:3px; padding-top:7px; margin-right:7px;">
+            <span class="glyphicon glyphicon-filter style="padding-right:5px; padding-top:2px;"></span>Filter
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <input class="form-control" id="myInput" type="text" placeholder="Type to Filter..">
+          </ul> 
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-warning float-right" type="button" data-toggle="dropdown" style="border-radius:3px; padding-top:7px; margin-right:7px;">
+            <span class="glyphicon glyphicon-filter style="padding-right:5px; padding-top:2px;"></span>Courses
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            {{#coursetitleData}}
+            <button class="btn btn-value">{{coursename}}</button>
+            {{/coursetitleData}}
+          </ul> 
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-warning float-right" type="button" data-toggle="dropdown" style="border-radius:3px; padding-top:7px; margin-right:7px;">
+            <span class="glyphicon glyphicon-filter style="padding-right:5px; padding-top:2px;"></span>Filters
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <button class="btn btn-options">Login</button>
+            <button class="btn btn-options">Course</button>
+            <button class="btn btn-options">Quiz</button>
+            <button class="btn btn-options">Assignment</button>
+          </ul> 
+        </div>
     <div class="btn-group float-right">
       <div class="btn-group">
-      <button class="btn btn-warning" type="button" data-toggle="dropdown" style="border-radius: 3px;margin-right:6px;"><span class="glyphicon glyphicon-cloud-download" style="padding-right:5px; padding-top:2px;"></span>Download
-        <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-          <li><a href="#">CSV</a></li>
-          <li><a href="#">Excel</a></li>
-          <li><a href="#">Print</a></li>
-        </ul> 
+        <button class="btn btn-warning" type="button" data-toggle="dropdown" style="border-radius: 3px;margin-right:6px;">
+          <span class="glyphicon glyphicon-cloud-download" style="padding-right:5px; padding-top:2px;"></span>Download
+          <span class="caret"></span>
+        </button>
+          <ul class="dropdown-menu">
+            <li><a href="#">CSV</a></li>
+            <li><a href="#">Excel</a></li>
+            <li><a href="#">Print</a></li>
+          </ul> 
       </div>
-  </h1>
+    </div>
+      
+    </div>
 </div>
-<table class="table table-bordered table table-striped" style="margin-top:15px;"">
-    <thead style="background-color:#8585ff; color:white; font-family: Arial, sans-serif; font-size : 16px;">
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody id="myTable" style="font-family: Arial, sans-serif;font-size: 14px;">
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-      <tr>
-        <td>April</td>
-        <td>olive</td>
-        <td>april@example.com</td>
-      </tr>
-    </tbody>
-  </table>
+
+<div class="optionrender"></div>
+
 </div>
-<script>
-  $(document).ready(function(){
-    $("#myInput").on("keyup", function() {
-      var value = $(this).val().toLowerCase();
-      $("#myTable tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-      });
-    });
-  });
-  </script>
-</body>
-</html>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.0/mustache.js"></script>
+
+

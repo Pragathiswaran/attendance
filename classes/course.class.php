@@ -10,28 +10,30 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class course {
-    private function getUserCourseActivity() {
+    public function getUserCourseActivity($course) {
         global $DB;
 
-        $param = ['exclude_userid' => 2];
+        $param = ['exclude_userid' => 2, 'course_name' => $course];
 
         $sql = "SELECT l.id AS log_event_id,
-                       l.timecreated AS timestamp,
-                       FROM_UNIXTIME(l.timecreated, '%Y-%m-%d %H:%i:%s') AS time_utc,
-                       FROM_UNIXTIME(l.timecreated, '%H:%i:%s') AS time_only,
-                       FROM_UNIXTIME(l.timecreated, '%Y-%m-%d') AS date,
-                       l.action,
-                       u.username,
-                       u.id AS userid,
-                       c.id AS courseid,
-                       c.fullname AS course_name,
-                       l.origin,
-                       l.ip
-                FROM {logstore_standard_log} l
-                JOIN {user} u ON u.id = l.userid
-                JOIN {course} c ON c.id = l.courseid
-                WHERE l.courseid != 0 AND l.userid != :exclude_userid
-                ORDER BY l.userid, l.courseid, l.timecreated ASC";
+        l.timecreated AS timestamp,
+        FROM_UNIXTIME(l.timecreated, '%Y-%m-%d %H:%i:%s') AS time_utc,
+        FROM_UNIXTIME(l.timecreated, '%H:%i:%s') AS time_only,
+        FROM_UNIXTIME(l.timecreated, '%Y-%m-%d') AS date,
+        l.action,
+        u.username,
+        u.id AS userid,
+        c.id AS courseid,
+        c.fullname AS course_name,
+        l.origin,
+        l.ip
+        FROM {logstore_standard_log} l
+        JOIN {user} u ON u.id = l.userid
+        JOIN {course} c ON c.id = l.courseid
+        WHERE c.fullname = :course_name 
+        AND l.userid != :exclude_userid
+        ORDER BY l.userid, l.courseid, l.timecreated ASC;
+        ";
 
         $activityData = $DB->get_records_sql($sql, $param);
 
@@ -78,11 +80,7 @@ class course {
             }
         }
 
-        return $userCourseAccess;
-    }
-
-    public function ShowData() {
-        $userCourseAccess = $this->getUserCourseActivity();
+        // return $userCourseAccess;
         $showData = [];
         foreach ($userCourseAccess as $entries => $value) {
             foreach($value['sessions'] as $entry){
@@ -99,10 +97,7 @@ class course {
                     'duration' => $entry['duration']
                 ];  
             }
-            
         }
-
         return $showData;
     }
-
 }

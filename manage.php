@@ -22,12 +22,8 @@
  */
 
 require_once(__DIR__.'/../../config.php'); 
-// require_once($CFG->dirroot.'/local/attendance/classes/quiz.class.php'); 
-// require_once($CFG->dirroot.'/local/attendance/classes/course.class.php'); 
-// require_once($CFG->dirroot.'/local/attendance/classes/assignment.class.php'); 
-// require_once($CFG->dirroot.'/local/attendance/classes/access.class.php');
-
-
+require_once('lib.php');
+// require_once($CFG->libdir . '/sessionlib.php');
 $folderPath = $CFG->dirroot.'/local/attendance/classes/';
 
 $directory = opendir($folderPath);
@@ -48,17 +44,19 @@ $PAGE->set_url(new moodle_url('/local/attendance/manage.php'));
 $PAGE->set_context($context);
 $PAGE->set_title(get_string('pluginname', 'local_attendance'));
 $PAGE->set_heading(get_string('pluginname', 'local_attendance'));
-// $PAGE->navigation("Report", new moodle_url('/local/attendance/manage.php'));
+$PAGE->requires->js(new moodle_url('/local/attendance/amd/src/script.js'));
+$PAGE->requires->js(new moodle_url('/local/attendance/amd/src/options.js'));
+
 
 echo $OUTPUT->header();
 
-$attendance = new quiz();
-$userCourseAccess = $attendance->quizAttempt();
-// $userCourseAccess = $attendance->ShowData();
-// $userCourseAccess = $attendance->assignment();
-// echo $OUTPUT->render_from_template('local_attendance/manage', ['dateWiseAccess' => $userCourseAccess]);
-//echo $OUTPUT->render_from_template('local_attendance/quiz', ['quizData' => $userCourseAccess]);
-echo $OUTPUT->render_from_template('local_attendance/render',"hello");
-// echo $OUTPUT->render_from_template('local_attendance/assignment', ['assignmentData' => $userCourseAccess]);
+$course = new render();
+$courseData = $course->coursenamedata();
+
+$data = [
+    'coursetitleData' => $courseData,
+];
+
+echo $OUTPUT->render_from_template('local_attendance/render',$data);
 
 echo $OUTPUT->footer();
