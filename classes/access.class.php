@@ -59,8 +59,8 @@ foreach ($getAccess as $data) {
                 'userid' => $data->userid,
                 'username' => $data->username,
                 'date' => $data->date,
-                'login_time' => $loginTime->format('Y-m-d H:i:s'),
-                'logout_time' => $logoutTime->format('Y-m-d H:i:s'),
+                'login_time' => $loginTime->format('H:i:s'),
+                'logout_time' => $logoutTime->format('H:i:s'),
                 'duration' => $durationFormatted,
             ];
 

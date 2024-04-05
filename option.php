@@ -53,12 +53,12 @@ if($option === 'Users'){
           <th>".get_string('sessionduration', 'local_attendance')."</th>
       </tr>
     </thead>
-    <tbody class='testrender'>
+    <tbody id='testrender' style='color:black; font-size:14px;'>
     </tbody>
     ";
 }else if($option === 'Quiz'){
     echo"
-    <table class='generaltable' id='example'>
+    <table id='example'>
     <thead>
         <tr>
         <th>".get_string('userid', 'local_attendance')."</th>

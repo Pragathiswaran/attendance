@@ -6,7 +6,8 @@ jQuery(document).ready(function() {
             data: { coursename: coursename },
             type: 'POST',
             success: function(response) {
-                $('.testrender').html(response);
+                $('#testrender').html(response);
+                console.log(response);
             },
             error: function(response) {
                 console.log('Error: ' + response);
