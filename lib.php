@@ -22,7 +22,7 @@
  * @var stdClass $plugin
  */
 require_once(__DIR__.'/../../config.php'); 
-require_once($CFG->dirroot.'/local/attendance/classes/course.class.php');
+// require_once($CFG->dirroot.'/local/attendance/classes/course.class.php');
 // include_once($CFG->dirroot . '/local/attendance/manage.php');
 require_login();
 
@@ -52,5 +52,8 @@ function local_attendance_extend_navigation(global_navigation $navigation)
     $main_node->showinflatnavigation = true;
 
 }
+
+
+
 
 

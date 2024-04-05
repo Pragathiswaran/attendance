@@ -23,7 +23,7 @@
 
 require_once(__DIR__.'/../../config.php'); 
 require_once('lib.php');
-
+// require_once($CFG->dirroot.'/local/attendance/formlib.php');
 $folderPath = $CFG->dirroot.'/local/attendance/classes/';
 $directory = opendir($folderPath);
 
@@ -50,20 +50,26 @@ $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/excel.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/print.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/copy.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/csv.js'));
+
+
+
 echo $OUTPUT->header();
 
-$course = new render();
-$courseData = $course->coursenamedata();
+// $course = new render();
+// $courseData = $course->coursenamedata();
 
-$data = [
-    'coursetitleData' => $courseData,
-];
+// $data = [
+//     'coursetitleData' => $courseData,
+// ];
 
-$access = new access();
-$accessData = $access->getAccess();
+// $access = new access();
+// $accessData = $access->getAccess();
 // echo "<pre>";
 // print_r($accessData);
 // echo "</pre>";
+
+
+
 echo $OUTPUT->render_from_template('local_attendance/render',$data);
 // echo $OUTPUT->render_from_template('local_attendance/example', $data);
 
