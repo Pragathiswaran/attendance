@@ -1,6 +1,6 @@
 
 <style>
-    #myInput {
+    #example {
       padding: 20px;
       margin-top: -6px;
       border: 0;
@@ -19,8 +19,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 <body>
 <div class="container">
-    <div style="font-family: Arial, sans-serif; font-size:30px; margin-right:2px;float-left;">Quiz Activity Report 
-      <div class="btn-group float-right">
+  <div>
+    <div style="font-family: Arial, sans-serif; font-size:30px; margin-right:2px;float-left; mb-1" id='title'></div>
+  </div>
+    <div class="btn-group float-right mb-4">
         <div class="btn-group">
           <button class="btn btn-warning float-right" type="button" data-toggle="dropdown" style="border-radius:3px; padding-top:7px; margin-right:7px;">
             <span class="glyphicon glyphicon-filter style="padding-right:5px; padding-top:2px;"></span>Filter
@@ -43,41 +45,36 @@
         </div>
         <div class="btn-group">
           <button class="btn btn-warning float-right" type="button" data-toggle="dropdown" style="border-radius:3px; padding-top:7px; margin-right:7px;">
-            <span class="glyphicon glyphicon-filter style="padding-right:5px; padding-top:2px;"></span>Filters
+            <span class="glyphicon glyphicon-filter style="padding-right:5px; padding-top:2px;"></span>Reports
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-            <button class="btn btn-options">Login</button>
-            <button class="btn btn-options">Course</button>
-            <button class="btn btn-options">Quiz</button>
-            <button class="btn btn-options">Assignment</button>
+            <li><button class="btn btn-options">Users</button></li>
+            <li><button class="btn btn-options">Course</button><li>
+            <li><button class="btn btn-options">Quiz</button></li>
+            <li><button class="btn btn-options">Assignment</button></li>
           </ul> 
         </div>
-    <div class="btn-group float-right">
-      <div class="btn-group">
-        <button class="btn btn-warning" type="button" data-toggle="dropdown" style="border-radius: 3px;margin-right:6px;">
-          <span class="glyphicon glyphicon-cloud-download" style="padding-right:5px; padding-top:2px;"></span>Download
-          <span class="caret"></span>
-        </button>
-          <ul class="dropdown-menu">
-           <li><button class="btn btn-filepdf">PDF</button></li> 
-           <li><button class="btn btn-file" onclick="exportToExcel()">EXCEL</button></li>
-           <li><button class="btn btn-file" onclick="copyTable()">COPY</button></li>
-           <li><button class="btn btn-file" onclick="exportTocsv()">CSV</button></li>
-           <li><button class="btn btn-file" onclick="printTable()">PRINT</button></li>
-           
-          </ul> 
-      </div>
-    </div>
-      
-    </div>
+        <div class="btn-group">
+          <button class="btn btn-warning" type="button" data-toggle="dropdown" style="border-radius: 3px;margin-right:6px;">
+            <span class="glyphicon glyphicon-cloud-download" style="padding-right:5px; padding-top:2px;"></span>Export
+            <span class="caret"></span>
+          </button>
+            <ul class="dropdown-menu">
+              <li><button class="btn btn-filepdf">PDF</button></li> 
+           <!--  <li><button class="btn btn-file" onclick="exportToExcel()">EXCEL</button></li>  --> 
+              <li><button class="btn btn-file" onclick="copyTable()">COPY</button></li>
+              <li><button class="btn btn-file" onclick="exportTocsv()">CSV</button></li>
+              <li><button class="btn btn-file" onclick="printTable()">PRINT</button></li>
+            </ul>
+          </div>
 </div>
 
-<table id="example" class="generaltable">
+<table id="example" class="table table-bordered table-striped table-condensed" style="margin-top:50px; background-color:#8585ff; color:#ffffff; font-size:16px;">
 
 </table>
 
-</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Include jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>

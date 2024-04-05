@@ -4,10 +4,13 @@ function copyTable() {
 
     // Loop through rows and cells to construct table content
     for (var i = 0; i < table.rows.length; i++) {
-        for (var j = 0; j < table.rows[i].cells.length; j++) {
-            tableContent += table.rows[i].cells[j].innerText + "\t"; // Separate cells with tab
+        // Check if the row is visible (not filtered out)
+        if (table.rows[i].style.display !== "none") {
+            for (var j = 0; j < table.rows[i].cells.length; j++) {
+                tableContent += table.rows[i].cells[j].innerText + "\t"; // Separate cells with tab
+            }
+            tableContent += "\n"; // Newline after each row
         }
-        tableContent += "\n"; // Newline after each row
     }
 
     // Copy the table content to clipboard

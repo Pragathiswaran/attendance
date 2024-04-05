@@ -21,7 +21,7 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'Enhanced Attendance Tracking';
+$string['pluginname'] = 'Attendance Tracking';
 $string['report'] = 'Comprehensive Activity Report';
 $string['userid'] = 'User Id';
 $string['user'] = 'User Id';

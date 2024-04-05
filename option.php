@@ -10,7 +10,7 @@ require_login();
 $option = optional_param('options', null, PARAM_TEXT);
 // echo $option;
 
-if($option === 'Login'){
+if($option === 'Users'){
     $login = new access();
     $loginData = $login->getAccess();
     echo "
@@ -27,7 +27,7 @@ if($option === 'Login'){
     </thead>
     ";
     foreach($loginData as $data){
-        echo "<tbody>";
+        echo "<tbody style='color:black; font-size:14px;'>";
         echo "<tr>";
         echo "<td>".$data['userid']."</td>";
         echo "<td>".$data['username']."</td>";
@@ -41,7 +41,7 @@ if($option === 'Login'){
     
 } else if($option === 'Course'){
     echo"
-    <thead >
+    <thead>
       <tr>
           <th>".get_string('userid', 'local_attendance')."</th>
           <th>".get_string('username', 'local_attendance')."</th>
@@ -71,14 +71,14 @@ if($option === 'Login'){
             <th>Duration</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody style='color:black; font-size:14px;'>
     </tbody>
     </table>
     ";
     $quiz = new quiz();
     $quizData = $quiz->quizAttempt();
     foreach($quizData as $data){
-        echo "<tbody>";
+        echo "<tbody style='color:black; font-size:14px;'>";
         echo "<tr>";
         echo "<td>".$data['userid']."</td>";
         echo "<td>".$data['username']."</td>";
@@ -110,14 +110,14 @@ if($option === 'Login'){
             <th>Duration</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody style='color:black; font-size:14px;'>
     </tbody>
     </table>
     ";
     $assignment = new assignment();
     $assignments = $assignment->Assignment();
     foreach($assignments as $data){
-        echo "<tbody>";
+        echo "<tbody style='color:black; font-size:14px;'>";
         echo "<tr>";
         echo "<td>".$data['userid']."</td>";
         echo "<td>".$data['username']."</td>";
