@@ -50,6 +50,7 @@ function local_attendance_extend_navigation(global_navigation $navigation)
     $main_node->forceopen = true;
     $main_node->isexpandable = false;
     $main_node->showinflatnavigation = true;
+
 }
 
 

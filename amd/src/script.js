@@ -7,6 +7,9 @@ jQuery(document).ready(function() {
             type: 'POST',
             success: function(response) {
                 $('.testrender').html(response);
+            },
+            error: function(response) {
+                console.log('Error: ' + response);
             }
         });
     }

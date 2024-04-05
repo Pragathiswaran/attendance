@@ -24,6 +24,6 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_attendance';
-$plugin->version = 2020110909;
+$plugin->version = 2020110910;
 $plugin->requires = 2016052300; // Moodle version
 

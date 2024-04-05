@@ -2,32 +2,46 @@
 
 require_once(__DIR__.'/../../config.php'); 
 require_once($CFG->dirroot.'/local/attendance/classes/access.class.php'); 
+require_once($CFG->dirroot.'/local/attendance/classes/assignment.class.php');
+require_once($CFG->dirroot.'/local/attendance/classes/quiz.class.php');
+require_once($CFG->dirroot.'/local/attendance/classes/assignment.class.php');
 require_login();
 
 $option = optional_param('options', null, PARAM_TEXT);
 // echo $option;
 
 if($option === 'Login'){
+    $login = new access();
+    $loginData = $login->getAccess();
     echo "
-    <table class='generaltable'>
+   
     <thead>
         <tr>
-            <th>Log_event_id</th>
-            <th>timestamp</th>
-            <th>time_utc</th>
-            <th>action</th>
+            <th>userid</th>
             <th>username</th>
-            <th>origin</th>
-            <th>ip</th>
+            <th>Date</th>
+            <th>Login</th>
+            <th>Logout</th>
+            <th>Duration</th>
         </tr>
     </thead>
-    <tbody>
     ";
+    foreach($loginData as $data){
+        echo "<tbody>";
+        echo "<tr>";
+        echo "<td>".$data['userid']."</td>";
+        echo "<td>".$data['username']."</td>";
+        echo "<td>".$data['date']."</td>";
+        echo "<td>".$data['login_time']."</td>";
+        echo "<td>".$data['logout_time']."</td>";
+        echo "<td>".$data['duration']."</td>";
+        echo "</tr>";
+        echo "</tbody>";
+    }
     
 } else if($option === 'Course'){
     echo"
-    <table class='table table-bordered table table-striped' style='margin-top:15px;'>
-    <thead style='background-color:#8585ff; color:white; font-family: Arial, sans-serif; font-size : 16px;'>
+    <thead >
       <tr>
           <th>".get_string('userid', 'local_attendance')."</th>
           <th>".get_string('username', 'local_attendance')."</th>
@@ -39,14 +53,12 @@ if($option === 'Login'){
           <th>".get_string('sessionduration', 'local_attendance')."</th>
       </tr>
     </thead>
-    <tbody id='myTable' style='font-family: Arial, sans-serif;font-size: 14px;' class='testrender'>
-       
+    <tbody class='testrender'>
     </tbody>
-  </table>
     ";
 }else if($option === 'Quiz'){
     echo"
-    <table class='generaltable'>
+    <table class='generaltable' id='example'>
     <thead>
         <tr>
         <th>".get_string('userid', 'local_attendance')."</th>
@@ -63,6 +75,24 @@ if($option === 'Login'){
     </tbody>
     </table>
     ";
+    $quiz = new quiz();
+    $quizData = $quiz->quizAttempt();
+    foreach($quizData as $data){
+        echo "<tbody>";
+        echo "<tr>";
+        echo "<td>".$data['userid']."</td>";
+        echo "<td>".$data['username']."</td>";
+        echo "<td>".$data['course_name']."</td>";
+        echo "<td>".$data['quiz_name']."</td>";
+        echo "<td>".$data['date']."</td>";
+        echo "<td>".$data['timestart']."</td>";
+        echo "<td>".$data['timefinish']."</td>";
+        echo "<td>".$data['duration']."</td>";
+        echo "</tr>";
+        echo "</tbody>";
+    }
+
+
 }else if($option === 'Assignment'){
     echo"
     <table class='generaltable'>
@@ -84,4 +114,22 @@ if($option === 'Login'){
     </tbody>
     </table>
     ";
+    $assignment = new assignment();
+    $assignments = $assignment->Assignment();
+    foreach($assignments as $data){
+        echo "<tbody>";
+        echo "<tr>";
+        echo "<td>".$data['userid']."</td>";
+        echo "<td>".$data['username']."</td>";
+        echo "<td>".$data['course']."</td>";
+        echo "<td>".$data['coursename']."</td>";
+        echo "<td>".$data['name']."</td>";
+        echo "<td>".$data['submission']."</td>";
+        echo "<td>".$data['duedate']."</td>";
+        echo "<td>".$data['timecreated']."</td>";
+        echo "<td>".$data['timemodified']."</td>";
+        echo "<td>".$data['duration']."</td>";
+        echo "</tr>";
+        echo "</tbody>";
+    }
 }

@@ -16,6 +16,7 @@
       background-color: #ffffff; 
   }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 <body>
 <div class="container">
     <div style="font-family: Arial, sans-serif; font-size:30px; margin-right:2px;float-left;">Quiz Activity Report 
@@ -59,9 +60,12 @@
           <span class="caret"></span>
         </button>
           <ul class="dropdown-menu">
-            <li><a href="#">CSV</a></li>
-            <li><a href="#">Excel</a></li>
-            <li><a href="#">Print</a></li>
+           <li><button class="btn btn-filepdf">PDF</button></li> 
+           <li><button class="btn btn-file" onclick="exportToExcel()">EXCEL</button></li>
+           <li><button class="btn btn-file" onclick="copyTable()">COPY</button></li>
+           <li><button class="btn btn-file" onclick="exportTocsv()">CSV</button></li>
+           <li><button class="btn btn-file" onclick="printTable()">PRINT</button></li>
+           
           </ul> 
       </div>
     </div>
@@ -69,18 +73,32 @@
     </div>
 </div>
 
-<div class="optionrender"></div>
+<table id="example" class="generaltable">
+
+</table>
 
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Include jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+  <!-- Include autoTable plugin -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js" defer></script>
 <script>
   $(document).ready(function(){
     $("#myInput").on("keyup", function() {
-      var value = $(this).val().toLowerCase();
-      $("#myTable tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-      });
+        var value = $(this).val().toLowerCase();
+
+        // Show/hide table rows based on search input
+        $("#example tbody tr").each(function() {
+            var rowText = $(this).text().toLowerCase();
+            $(this).toggle(rowText.indexOf(value) > -1);
+        });
     });
-  });
-  </script>
+});
+
+
+
+</script>
 </body>
-</html>

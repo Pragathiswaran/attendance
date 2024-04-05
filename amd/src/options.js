@@ -6,8 +6,8 @@ jQuery(document).ready(function() {
             data: { options: options },
             type: 'POST',
             success: function(response) {
-                $('.optionrender').html(response);
-                console.log('Option selected: ' + response);
+                $('#example').html(response);
+                // console.log('Option selected: ' + response);
             }
         });
     }
