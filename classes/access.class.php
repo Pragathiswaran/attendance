@@ -50,9 +50,21 @@ foreach ($getAccess as $data) {
 
             // Calculate the duration in seconds
             $durationInSeconds = $logoutTime->getTimestamp() - $loginTime->getTimestamp();
-
-            // Convert duration from seconds to HH:MM:SS format
-            $durationFormatted = gmdate("H:i:s", $durationInSeconds);
+            if ($durationInSeconds < 60) {
+                // Duration is less than a minute, display in seconds only
+                $durationFormatted = $durationInSeconds . " sec";
+            } elseif ($durationInSeconds < 3600) {
+                // Duration is less than an hour, but at least a minute, display in minutes and seconds
+                $minutes = floor($durationInSeconds / 60);
+                $seconds = $durationInSeconds % 60;
+                $durationFormatted = $minutes . " min " . $seconds . " sec";
+            } else {
+                // Duration is an hour or more, display in hours, minutes, and seconds
+                $hours = floor($durationInSeconds / 3600);
+                $minutes = floor(($durationInSeconds % 3600) / 60);
+                $seconds = $durationInSeconds % 60;
+                $durationFormatted = $hours . " hour " . $minutes . " min " . $seconds . " sec";
+            }
 
             // Store duration information in the array
             $duration[] = [

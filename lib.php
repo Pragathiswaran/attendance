@@ -28,10 +28,14 @@ require_login();
 
 function local_attendance_extend_navigation(global_navigation $navigation)
 {
-    // Check if the current user has the capability to configure the site
-    if (!has_capability('moodle/site:config', context_system::instance())) {
-        return; // If the user doesn't have the capability, exit the function
+    global $USER, $COURSE;
+
+    // Check if the current user has the capability to configure the site or edit course topics
+    if (!has_capability('moodle/site:config', context_system::instance()) &&
+        !has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
+        return; // If the user doesn't have either capability, exit the function
     }
+
 
     // Add a new node to the global navigation menu
     $main_node = $navigation->add(

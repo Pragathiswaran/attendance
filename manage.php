@@ -34,8 +34,10 @@ while ($file = readdir($directory)) {
 }
 
 require_login();
-$context = context_system::instance();
-require_capability('moodle/site:config', $context); 
+if (has_capability('moodle/site:config', context_system::instance()) &&
+    !has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
+        exit;
+    }
 
 $PAGE->set_url(new moodle_url('/local/attendance/manage.php'));
 $PAGE->set_context($context);

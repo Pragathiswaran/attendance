@@ -41,7 +41,19 @@ class quiz{
             $startTime = new DateTime($value->timestart_utc);
             $finishTime = new DateTime($value->timefinish_utc);
     
-            $duration = $startTime->diff($finishTime)->format('%H:%i:%s');
+            $between = $startTime->diff($finishTime);
+            $parts = [];
+            if ($between->h > 0) {
+                $parts[] = $between->h . ' ' . ($between->h == 1 ? 'hour' : 'hours');
+            }
+            if ($between->i > 0) {
+                $parts[] = $between->i . ' ' . ($between->i == 1 ? 'min' : 'mins');
+            }
+            if ($between->s > 0 || count($parts) == 0) {
+                $parts[] = $between->s . ' ' . ($between->s == 1 ? 'sec' : 'secs');
+            }
+
+            $duration = implode(' : ', $parts);
             $quizData[] = [
                 'userid' => $value->userid,
                 'username' => $value->username,
