@@ -133,3 +133,5 @@ if($option === 'Users'){
         echo "</tbody>";
     }
 }
+
+// echo $OUTPUT->header();
