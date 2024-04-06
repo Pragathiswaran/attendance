@@ -70,6 +70,7 @@ $data = [
 // print_r($accessData);
 // echo "</pre>";
 //this example command for checking the sync changes
+//other command for checking the sync changes
 
 
 echo $OUTPUT->render_from_template('local_attendance/render',$data);
