@@ -55,12 +55,12 @@ $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/csv.js'));
 
 echo $OUTPUT->header();
 
-// $course = new render();
-// $courseData = $course->coursenamedata();
+$course = new render();
+$courseData = $course->coursenamedata();
 
-// $data = [
-//     'coursetitleData' => $courseData,
-// ];
+$data = [
+    'coursetitleData' => $courseData,
+];
 
 // $access = new access();
 // $accessData = $access->getAccess();
