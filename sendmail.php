@@ -1,7 +1,4 @@
 <?php
-
-// Test SMTP connection
-
 // Include Moodle configuration file
 require_once('../../config.php');
 global $CFG, $DB, $USER;
@@ -21,7 +18,7 @@ function fetchAttendanceReport() {
 
 // Function to send email with report data
 function sendAttendanceReportByEmail($toEmail, $reportData) {
-    global $USER;
+    global $USER, $CFG;
 
     $subject = 'Attendance Report';
     $message = "Dear User,\n\n";
@@ -29,12 +26,15 @@ function sendAttendanceReportByEmail($toEmail, $reportData) {
     $message .= "Report Data:\n";
     $message .= $reportData;
 
-    $headers = 'From: ' . $USER->email . "\r\n" .
-               'Reply-To: ' . $USER->email . "\r\n" .
-               'X-Mailer: PHP/' . phpversion();
+    // Get recipient user object by email
+    $recipient = $DB->get_records_sql('user', array('email' => $toEmail));
+    if (!$recipient) {
+        echo "User with email $toEmail not found.";
+        return;
+    }
 
     // Send email using Moodle's email_to_user() function
-    $result = email_to_user($toEmail, $USER, $subject, $message);
+    $result = email_to_user($recipient, $USER, $subject, $message);
 
     if ($result) {
         echo "Attendance report sent successfully to $toEmail.";
@@ -47,7 +47,6 @@ function sendAttendanceReportByEmail($toEmail, $reportData) {
 $reportData = fetchAttendanceReport();
 
 // Example: Sending report to a specific email address
-$toEmail = 'mihaan59@example.com';
+$toEmail = 'mpragathiswaran@gmail.com';
 sendAttendanceReportByEmail($toEmail, $reportData);
-
-
+?>
