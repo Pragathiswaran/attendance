@@ -1,101 +1,53 @@
 
-<style>
-    #example {
-      padding: 20px;
-      margin-top: -6px;
-      border: 0;
-      border-radius: 0;
-      background: #f1f1f1;
-    }
-    .table-striped tbody tr:nth-of-type(even)
-     {
-      background-color:#F0F0F5; 
-     }
-     .table-striped tbody tr:nth-of-type(odd)
-      {
-      background-color: #ffffff; 
-  }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-<body>
 <div class="container">
-  <div>
-    <div style="font-family: Arial, sans-serif; font-size:30px; margin-right:2px;float-left; mb-1" id='title'></div>
-  </div>
-    <div class="btn-group float-right mb-4">
-        <div class="btn-group">
-          <button class="btn btn-warning float-right" type="button" data-toggle="dropdown" style="border-radius:3px; padding-top:7px; margin-right:7px;">
-            <span class="glyphicon glyphicon-filter style="padding-right:5px; padding-top:2px;"></span>Filter
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <input class="form-control" id="myInput" type="text" placeholder="Type to Filter..">
-          </ul> 
-        </div>
-        <div class="btn-group">
-          <button class="btn btn-warning float-right" type="button" data-toggle="dropdown" style="border-radius:3px; padding-top:7px; margin-right:7px;">
-            <span class="glyphicon glyphicon-filter style="padding-right:5px; padding-top:2px;"></span>Courses
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
+  <div class="d-flex flex-column position-relative">
+    <div >
+      <h1 id='title'></h1>
+    </div>
+
+    <div class="filter-container">
+      <div class="search">
+        <input type="text" class="search-text" placeholder="Type to Filter . . .">
+      </div>
+
+      <div class="btn-group ml-3">
+        <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-book"></span> Course <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
             {{#coursetitleData}}
-            <button class="btn btn-value">{{coursename}}</button>
+            <li class="btn btn-value">{{coursename}}</li>
             {{/coursetitleData}}
-          </ul> 
-        </div>
-        <div class="btn-group">
-          <button class="btn btn-warning float-right" type="button" data-toggle="dropdown" style="border-radius:3px; padding-top:7px; margin-right:7px;">
-            <span class="glyphicon glyphicon-filter style="padding-right:5px; padding-top:2px;"></span>Reports
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><button class="btn btn-options">Users</button></li>
-            <li><button class="btn btn-options">Course</button><li>
-            <li><button class="btn btn-options">Quiz</button></li>
-            <li><button class="btn btn-options">Assignment</button></li>
-          </ul> 
-        </div>
-        <div class="btn-group">
-          <button class="btn btn-warning" type="button" data-toggle="dropdown" style="border-radius: 3px;margin-right:6px;">
-            <span class="glyphicon glyphicon-cloud-download" style="padding-right:5px; padding-top:2px;"></span>Export
-            <span class="caret"></span>
-          </button>
-            <ul class="dropdown-menu">
-              <li><button class="btn btn-filepdf">PDF</button></li> 
-           <!--  <li><button class="btn btn-file" onclick="exportToExcel()">EXCEL</button></li>  --> 
-              <li><button class="btn btn-file" onclick="copyTable()">COPY</button></li>
-              <li><button class="btn btn-file" onclick="exportTocsv()">CSV</button></li>
-              <li><button class="btn btn-file" onclick="printTable()">PRINT</button></li>
-            </ul>
-          </div>
+        </ul>
+      </div>
+    
+      <div class="btn-group ml-3">
+        <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-stats"></span> Report <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li class="btn btn-options">Users</li>
+            <li class="btn btn-options">Course</li>
+            <li class="btn btn-options">Quiz</li>
+            <li class="btn btn-options">Assignment</li>
+        </ul>
+      </div>
+    
+      <div class="btn-group ml-3">
+        <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-book"></span> Export <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><button class="btn btn-filepdf">PDF</button></li>
+            <!-- <li><button class="btn btn-file" onclick="exportToExcel()">EXCEL</button></li> -->
+            <li><button class="btn btn-file" onclick="copyTable()">COPY</button></li>
+            <li><button class="btn btn-file" onclick="exportToCsv()">CSV</button></li>
+            <li><button class="btn btn-file" onclick="printTable()">PRINT</button></li>
+        </ul>
+      </div>
+    </div> 
+  </div>
+  
+  <table id="example" class="table table-bordered table-striped table-condensed">
+  </table>
 </div>
-
-<table id="example" class="table table-bordered table-striped table-condensed" style="margin-top:50px; background-color:#8585ff; color:#ffffff; font-size:16px;">
-
-</table>
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- Include jsPDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
-  <!-- Include autoTable plugin -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js" defer></script>
-<script>
-  $(document).ready(function(){
-    $("#myInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-
-        // Show/hide table rows based on search input
-        $("#example tbody tr").each(function() {
-            var rowText = $(this).text().toLowerCase();
-            $(this).toggle(rowText.indexOf(value) > -1);
-        });
-    });
-});
-
-
-
-</script>
-</body>

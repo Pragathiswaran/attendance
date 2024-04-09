@@ -1,52 +1,26 @@
 <?php
-// Include Moodle configuration file
-require_once('../../config.php');
-global $CFG, $DB, $USER;
+require_once(__DIR__.'/../../config.php');
 
-// Enable SMTP debugging
-$CFG->debugsmtp = true;
+// Replace with recipient's user ID
+$recipientUserId = 4;
 
-// Ensure script is accessed within Moodle
-require_login();
+// Get the recipient user object
+$recipientUser = $DB->get_record('user', array('id' => $recipientUserId));
 
-// Function to fetch report data (replace with your logic)
-function fetchAttendanceReport() {
-    // Example: Fetching report data from your plugin's database tables
-    $reportData = "Attendance Report Data Here...";
-    return $reportData;
+// Sender user object (optional)
+$senderUser = $USER; // Assuming $USER is the currently logged-in user
+
+// Email parameters
+$subject = 'Test Email from Moodle to send emaol eith attachment programmatically';
+$message = 'This is a test email sent from Moodle programmatically';
+$attachement_path = 'file.pdf';
+$attachement_name = 'attachment.pdf';
+
+// Send email to user
+
+if(email_to_user($recipientUser, $senderUser, $subject, $message,"",$attachement_path,$attachement_name)){
+    echo "success";
+} else {
+    echo "failed";
 }
 
-// Function to send email with report data
-function sendAttendanceReportByEmail($toEmail, $reportData) {
-    global $USER, $CFG;
-
-    $subject = 'Attendance Report';
-    $message = "Dear User,\n\n";
-    $message .= "Please find the attendance report attached.\n\n";
-    $message .= "Report Data:\n";
-    $message .= $reportData;
-
-    // Get recipient user object by email
-    $recipient = $DB->get_records_sql('user', array('email' => $toEmail));
-    if (!$recipient) {
-        echo "User with email $toEmail not found.";
-        return;
-    }
-
-    // Send email using Moodle's email_to_user() function
-    $result = email_to_user($recipient, $USER, $subject, $message);
-
-    if ($result) {
-        echo "Attendance report sent successfully to $toEmail.";
-    } else {
-        echo "Failed to send attendance report. Check SMTP logs for details.";
-    }
-}
-
-// Example: Fetching report data
-$reportData = fetchAttendanceReport();
-
-// Example: Sending report to a specific email address
-$toEmail = 'mpragathiswaran@gmail.com';
-sendAttendanceReportByEmail($toEmail, $reportData);
-?>

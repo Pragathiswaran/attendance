@@ -72,27 +72,30 @@ class course {
                 $sessions[$lastSessionKey]['end_timestamp'] = $activity->timestamp;
             }
         }
-
+        
         foreach ($userCourseAccess as &$userCourse) {
             foreach ($userCourse['sessions'] as &$session) {
                 $durationSeconds = $session['end_timestamp'] - $session['start_timestamp'];
-                if ($durationInSeconds < 60) {
+                if ($durationSeconds < 60) {
                     // Duration is less than a minute, display in seconds only
-                    $durationFormatted = $durationInSeconds . " sec";
-                } elseif ($durationInSeconds < 3600) {
+                    $durationFormatted = $durationSeconds . " sec";
+                } elseif ($durationSeconds < 3600) {
                     // Duration is less than an hour, but at least a minute, display in minutes and seconds
-                    $minutes = floor($durationInSeconds / 60);
-                    $seconds = $durationInSeconds % 60;
+                    $minutes = floor($durationSeconds / 60);
+                    $seconds = $durationSeconds % 60;
                     $durationFormatted = $minutes . " min " . $seconds . " sec";
                 } else {
                     // Duration is an hour or more, display in hours, minutes, and seconds
-                    $hours = floor($durationInSeconds / 3600);
-                    $minutes = floor(($durationInSeconds % 3600) / 60);
-                    $seconds = $durationInSeconds % 60;
+                    $hours = floor($durationSeconds / 3600);
+                    $minutes = floor(($durationSeconds % 3600) / 60);
+                    $seconds = $durationSeconds % 60;
                     $durationFormatted = $hours . " hour " . $minutes . " min " . $seconds . " sec";
                 }
+                // Assign the formatted duration back to the session
+                $session['duration'] = $durationFormatted;
             }
         }
+        
 
         // return $userCourseAccess;
         $showData = [];

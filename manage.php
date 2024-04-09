@@ -44,7 +44,6 @@ $PAGE->set_context($context);
 $PAGE->set_title(get_string('pluginname', 'local_attendance'));
 $PAGE->set_heading(get_string('pluginname', 'local_attendance'));
 $PAGE->requires->jQuery();
-// $PAGE->requires->js(new moodle_url('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/script.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/options.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/datatable.js'));
@@ -52,6 +51,8 @@ $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/excel.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/print.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/copy.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/csv.js'));
+$PAGE->requires->js(new moodle_url('/local/attendance/amd/src/filter.js'));
+$PAGE->requires->css(new moodle_url('/local/attendance/template.css'));
 
 
 
