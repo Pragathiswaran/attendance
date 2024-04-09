@@ -52,19 +52,29 @@ foreach ($getAccess as $data) {
             $durationInSeconds = $logoutTime->getTimestamp() - $loginTime->getTimestamp();
             if ($durationInSeconds < 60) {
                 // Duration is less than a minute, display in seconds only
-                $durationFormatted = $durationInSeconds . " sec";
+                // Check if seconds is plural
+                $secondsPlural = $durationInSeconds == 1 ? " sec" : " secs";
+                $durationFormatted = $durationInSeconds . $secondsPlural;
             } elseif ($durationInSeconds < 3600) {
                 // Duration is less than an hour, but at least a minute, display in minutes and seconds
                 $minutes = floor($durationInSeconds / 60);
                 $seconds = $durationInSeconds % 60;
-                $durationFormatted = $minutes . " min " . $seconds . " sec";
+                // Check if minutes and seconds are plural
+                $minutesPlural = $minutes == 1 ? " min :" : " mins :";
+                $secondsPlural = $seconds == 1 ? " sec" : " secs";
+                $durationFormatted = $minutes . $minutesPlural . $seconds . $secondsPlural;
             } else {
                 // Duration is an hour or more, display in hours, minutes, and seconds
                 $hours = floor($durationInSeconds / 3600);
                 $minutes = floor(($durationInSeconds % 3600) / 60);
                 $seconds = $durationInSeconds % 60;
-                $durationFormatted = $hours . " hour " . $minutes . " min " . $seconds . " sec";
+                // Check if hours, minutes, and seconds are plural
+                $hoursPlural = $hours == 1 ? " hour :" : " hours :";
+                $minutesPlural = $minutes == 1 ? " min :" : " mins :";
+                $secondsPlural = $seconds == 1 ? " sec" : " secs";
+                $durationFormatted = $hours . $hoursPlural . $minutes . $minutesPlural . $seconds . $secondsPlural;
             }
+
 
             // Store duration information in the array
             $duration[] = [

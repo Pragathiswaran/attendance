@@ -78,21 +78,28 @@ class course {
                 $durationSeconds = $session['end_timestamp'] - $session['start_timestamp'];
                 if ($durationSeconds < 60) {
                     // Duration is less than a minute, display in seconds only
-                    $durationFormatted = $durationSeconds . " sec";
+                    $secondsPlural = $durationSeconds == 1 ? " sec" : " secs";
+                    $durationFormatted = $durationSeconds . $secondsPlural;
                 } elseif ($durationSeconds < 3600) {
                     // Duration is less than an hour, but at least a minute, display in minutes and seconds
                     $minutes = floor($durationSeconds / 60);
                     $seconds = $durationSeconds % 60;
-                    $durationFormatted = $minutes . " min " . $seconds . " sec";
+                    $minutesPlural = $minutes == 1 ? " min :" : " mins :";
+                    $secondsPlural = $seconds == 1 ? " sec" : " secs";
+                    $durationFormatted = $minutes . $minutesPlural . $seconds . $secondsPlural;
                 } else {
                     // Duration is an hour or more, display in hours, minutes, and seconds
                     $hours = floor($durationSeconds / 3600);
                     $minutes = floor(($durationSeconds % 3600) / 60);
                     $seconds = $durationSeconds % 60;
-                    $durationFormatted = $hours . " hour " . $minutes . " min " . $seconds . " sec";
+                    $hoursPlural = $hours == 1 ? " hour :" : " hours :";
+                    $minutesPlural = $minutes == 1 ? " min :" : " mins :";
+                    $secondsPlural = $seconds == 1 ? " sec" : " secs";
+                    $durationFormatted = $hours . $hoursPlural . $minutes . $minutesPlural . $seconds . $secondsPlural;
                 }
                 // Assign the formatted duration back to the session
                 $session['duration'] = $durationFormatted;
+
             }
         }
         
