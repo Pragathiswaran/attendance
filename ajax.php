@@ -9,14 +9,8 @@ echo $cousername;
 
 $attendance = new course();
 
-if(!isset($coursename)){
-    $userCourseAccessData = $attendance->getUserCourseActivity('Web development');
-}
- else {
-    $userCourseAccessData = $attendance->getUserCourseActivity($coursename);
- }
-
-
+$userCourseAccessData = $attendance->getUserCourseActivity($coursename);
+ 
 foreach($userCourseAccessData as $data){
     echo"<tr>";
     echo"<td>".$data['userid']."</td>";
