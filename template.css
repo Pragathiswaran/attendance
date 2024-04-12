@@ -33,7 +33,7 @@
 }
 
 thead {
-  text-algin:center;
+  text-align: center;
    background-color: #2e2e2e;
    color: #fff;
    font-size: 16px; 
@@ -41,6 +41,7 @@ thead {
 
 tbody{
     font-size: 14px;
+    text-align:center;
 }
 .incompleted{
     background-color: #f6c4bf;

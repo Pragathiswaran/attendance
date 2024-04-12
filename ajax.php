@@ -10,8 +10,12 @@ echo $cousername;
 $attendance = new course();
 
 $userCourseAccessData = $attendance->getUserCourseActivity($coursename);
- 
+
 foreach($userCourseAccessData as $data){
+    if ($data['userid'] === $USER->id) 
+            {
+                continue;
+            }
     echo"<tr>";
     echo"<td>".$data['userid']."</td>";
     echo"<td>".$data['username']."</td>";
@@ -22,5 +26,4 @@ foreach($userCourseAccessData as $data){
     echo"<td>".$data['end_time']."</td>";
     echo"<td>".$data['duration']."</td>";
     echo"</tr>";
-    
 }

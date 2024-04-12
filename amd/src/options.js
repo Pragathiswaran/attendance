@@ -7,7 +7,7 @@ jQuery(document).ready(function() {
             type: 'POST',
             success: function(response) {
                 $('#example').html(response);
-                $('#title').html(options+' '+'Reports');
+                $('#title').html(options+' '+'Report');
                 console.log('Option selected: '+' '+ response);
             }
         });

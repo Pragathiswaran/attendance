@@ -17,24 +17,37 @@
 
       <div class="btn-group ml-3">
         <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="glyphicon glyphicon-book"></span> Course <span class="caret"></span>
+            <span class="glyphicon glyphicon-book"></span> Course List <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
             {{#coursetitleData}}
-            <li class="btn btn-value">{{coursename}}</li>
+            <li class="btn btn-value">{{coursenames}}</li>
             {{/coursetitleData}}
         </ul>
       </div>
-    
+  
+
       <div class="btn-group ml-3">
         <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="glyphicon glyphicon-stats"></span> Report <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <li class="btn btn-options">Users</li>
+            <li class="btn btn-options">Login</li>
             <li class="btn btn-options">Course</li>
             <li class="btn btn-options">Quiz</li>
             <li class="btn btn-options">Assignment</li>
+        </ul>
+      </div>
+
+      <div class="btn-group ml-3">
+        <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-stats"></span> Chart <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li class="btn btn-chart">Login</li>
+            <li class="btn btn-chart">Course Access</li>
+            <li class="btn btn-chart">Quiz Access</li>
+            <li class="btn btn-chart">Assignment Access</li>
         </ul>
       </div>
     
@@ -43,7 +56,7 @@
             <span class="glyphicon glyphicon-book"></span> Export <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <li><button class="btn btn-filepdf">PDF</button></li>
+            <li><button class="btn btn-filepdf" >PDF</button></li>
             <!-- <li><button class="btn btn-file" onclick="exportToExcel()">EXCEL</button></li> -->
             <li><button class="btn btn-file" onclick="copyTable()">COPY</button></li>
             <li><button class="btn btn-file" onclick="exportTocsv()">CSV</button></li>
