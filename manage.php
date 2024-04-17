@@ -53,6 +53,11 @@ $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/copy.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/csv.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/filter.js'));
 $PAGE->requires->css(new moodle_url('/local/attendance/template.css'));
+$PAGE->requires->js(new moodle_url('https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js'));
+$PAGE->requires->js(new moodle_url('https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js'));
+// $PAGE->requires->css(new moodle_url('https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css'));
+$PAGE->requires->css(new moodle_url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'));
+
 
 
 

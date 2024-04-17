@@ -1,9 +1,5 @@
 
-<head>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <!-- Include jsPDF library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-</head>
+
 <div class="container">
   <div class="d-flex flex-column position-relative">
     <div >
@@ -11,12 +7,24 @@
     </div>
 
     <div class="filter-container">
-      <div class="search">
+      <div class="search ml-4">
         <input type="text" class="search-text" placeholder="Type to Filter . . .">
       </div>
-
-      <div class="btn-group ml-3">
-        <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      
+      <div class="btn-group ml-4">
+        <button class="buttons btn btn-warning" type="button" data-toggle="dropdown" style="border-radius:3px;">
+            <span class="glyphicon glyphicon-stats"></span> Report <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><span class="btn btn-options">Users</span></li>
+            <li><span class="btn btn-options">Course</span></li>
+            <li><span class="btn btn-options">Quiz</span></li>
+            <li><span class="btn btn-options">Assignment</span></li>
+        </ul>
+      </div>
+    
+      <div class="btn-group ml-4">
+        <button class="buttons btn btn-warning" type="button" data-toggle="dropdown" style="border-radius:3px;">
             <span class="glyphicon glyphicon-book"></span> Course <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
@@ -26,21 +34,9 @@
         </ul>
       </div>
     
-      <div class="btn-group ml-3">
-        <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="glyphicon glyphicon-stats"></span> Report <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <li class="btn btn-options">Users</li>
-            <li class="btn btn-options">Course</li>
-            <li class="btn btn-options">Quiz</li>
-            <li class="btn btn-options">Assignment</li>
-        </ul>
-      </div>
-    
-      <div class="btn-group ml-3">
-        <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="glyphicon glyphicon-book"></span> Export <span class="caret"></span>
+      <div class="btn-group ml-4">
+        <button class="buttons btn btn-warning" type="button" data-toggle="dropdown" style="border-radius:3px;">
+            <span class="glyphicon glyphicon-cloud-download"></span> Download <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
             <li><button class="btn btn-filepdf">PDF</button></li>

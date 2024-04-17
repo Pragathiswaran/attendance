@@ -1,3 +1,4 @@
+
 .btn-search fa fa-search{
     width:10px;
     display:flex;
@@ -33,7 +34,7 @@
 }
 
 thead {
-  text-algin:center;
+    text-align: center;
    background-color: #2e2e2e;
    color: #fff;
    font-size: 16px; 
