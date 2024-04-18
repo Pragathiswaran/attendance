@@ -20,11 +20,11 @@ $mform = new email();
 
 if ($mform->is_cancelled()) {
    // redirect($CFG->wwwroot.'/local/attendance/manage.php', 'You have cancelled the form');
-    redirect($CFG->wwwroot.'/local/attendance/manage.php', 'You have cancelled the form', null, \core\output\notification::NOTIFY_INFO);
+    redirect($CFG->wwwroot.'/local/attendance/manage.php', 'You have cancelled th sendin mail', null, \core\output\notification::NOTIFY_INFO);
 } else if ($fromform = $mform->get_data()) {
     if (sendingmail($fromform->email, $fromform->emailtext, $fromform->emailmessage)) {
         // Display a success notification
-        redirect($CFG->wwwroot.'/local/attendance/manage.php', 'You successfullr send the email', null, \core\output\notification::NOTIFY_SUCCESS);
+        redirect($CFG->wwwroot.'/local/attendance/manage.php', 'You successfully send the email', null, \core\output\notification::NOTIFY_SUCCESS);
     } else {
         // Display an error notification
         redirect($CFG->wwwroot.'/local/attendance/email.php', 'You fail to sending email', null, \core\output\notification::NOTIFY_ERROR);
