@@ -1,31 +1,31 @@
 <?php
 require_once(__DIR__.'/../../config.php');
 
-require_login();
+// Replace with recipient's user ID
 
-function sendingmail($user,$subjectcontent,$messages){
+function sendingmail($user, $emailtext, $emailmessage) {
+    global $CFG, $DB, $USER;
 
-    global $DB, $USER;
+    // Get the recipient user obje
+$recipientUserId = $user;
 
-    // Replace with recipient's user ID
-    // Get the recipient user object
-    $recipientUser = $DB->get_record('user', array('username' => $user));
+// Get the recipient user object
+$recipientUser = $DB->get_record('user', array('username' => $recipientUserId));
 
-    // Sender user object (optional)
-    $senderUser = $USER; // Assuming $USER is the currently logged-in user
+// Sender user object (optional)
+$senderUser = $USER; // Assuming $USER is the currently logged-in user
 
-    // Email parameters
-    $subject = $subjectcontent;
-    $message = $messages;
-    $attachement_path = 'file.pdf';
-    $attachement_name = 'attachment.pdf';
+// Email parameters
+$subject = $emailtext;
+$message = $emailmessage;
+// Send email to user
 
-    // Send email to user
-
-    if(email_to_user($recipientUser, $senderUser, $subject, $message,"",$attachement_path,$attachement_name)){
-        return true;
-    } else {
-        return false;
-    }
+if(email_to_user($recipientUser, $senderUser, $subject, $message)){
+    //echo "success";
+    return true;
+} else {
+    //echo "failed";
+    return false;
 }
 
+}

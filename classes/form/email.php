@@ -48,7 +48,7 @@ class email extends moodleform {
         $mform->addElement('text', 'emailmessage', 'Enter the message');
         $mform->addElement('select', 'email', 'Select the User',$users);
 
-        $this->add_action_buttons();
+        $this->add_action_buttons('Email','Email');
     
     }
 
