@@ -7,7 +7,7 @@ jQuery(document).ready(function() {
             type: 'POST',
             success: function(response) {
                 $('#testrender').html(response);
-                console.log(response);
+                //console.log(response);
             },
             error: function(response) {
                 console.log('Error: ' + response);

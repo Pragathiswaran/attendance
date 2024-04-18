@@ -32,3 +32,5 @@ $(document).ready(function() {
         doc.save('filtered_table_data.pdf');
     });
 });
+
+

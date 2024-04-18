@@ -23,15 +23,10 @@
 
 require_once(__DIR__.'/../../config.php'); 
 require_once('lib.php');
+require_once($CFG->dirroot.'/local/attendance/classes/form/email.php');
+require_once($CFG->dirroot.'/local/attendance/classes/render.class.php');
 // require_once($CFG->dirroot.'/local/attendance/formlib.php');
-$folderPath = $CFG->dirroot.'/local/attendance/classes/';
-$directory = opendir($folderPath);
 
-while ($file = readdir($directory)) {
-    if (pathinfo($file, PATHINFO_EXTENSION) == 'php') {
-        require_once $folderPath . $file;
-    }
-}
 
 require_login();
 if (has_capability('moodle/site:config', context_system::instance()) &&
@@ -52,27 +47,28 @@ $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/print.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/copy.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/csv.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/filter.js'));
+$PAGE->requires->js(new moodle_url('/local/attendance/amd/src/mail.js'));
 $PAGE->requires->css(new moodle_url('/local/attendance/template.css'));
-
-
-
-echo $OUTPUT->header();
 
 $course = new render();
 $courseData = $course->coursenamedata();
 
+/*
+$mform = new email();
+
+if ($mform->is_cancelled()) {
+    redirect($CFG->wwwroot.'/index.php', 'You have cancelled the form');
+}
+
+*/
+echo $OUTPUT->header();
+
 $data = [
     'coursetitleData' => $courseData,
+    'emailurl' => new moodle_url('/local/attendance/email.php')
 ];
 
-// $access = new access();
-// $accessData = $access->getAccess();
-// echo "<pre>";
-// print_r($accessData);
-// echo "</pre>";
-//this example command for checking the sync changes
-//other command for checking the sync changes
-
+//$mform->display();
 
 echo $OUTPUT->render_from_template('local_attendance/render',$data);
 // echo $OUTPUT->render_from_template('local_attendance/example', $data);

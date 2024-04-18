@@ -8,7 +8,7 @@ jQuery(document).ready(function() {
             success: function(response) {
                 $('#example').html(response);
                 $('#title').html(options+' '+'Report');
-                console.log('Option selected: '+' '+ response);
+                //console.log('Option selected: '+' '+ response);
             }
         });
     }

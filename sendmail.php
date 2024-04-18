@@ -1,26 +1,31 @@
 <?php
 require_once(__DIR__.'/../../config.php');
 
-// Replace with recipient's user ID
-$recipientUserId = 4;
+require_login();
 
-// Get the recipient user object
-$recipientUser = $DB->get_record('user', array('id' => $recipientUserId));
+function sendingmail($user,$subjectcontent,$messages){
 
-// Sender user object (optional)
-$senderUser = $USER; // Assuming $USER is the currently logged-in user
+    global $DB, $USER;
 
-// Email parameters
-$subject = 'Test Email from Moodle to send emaol eith attachment programmatically';
-$message = 'This is a test email sent from Moodle programmatically';
-$attachement_path = 'file.pdf';
-$attachement_name = 'attachment.pdf';
+    // Replace with recipient's user ID
+    // Get the recipient user object
+    $recipientUser = $DB->get_record('user', array('username' => $user));
 
-// Send email to user
+    // Sender user object (optional)
+    $senderUser = $USER; // Assuming $USER is the currently logged-in user
 
-if(email_to_user($recipientUser, $senderUser, $subject, $message,"",$attachement_path,$attachement_name)){
-    echo "success";
-} else {
-    echo "failed";
+    // Email parameters
+    $subject = $subjectcontent;
+    $message = $messages;
+    $attachement_path = 'file.pdf';
+    $attachement_name = 'attachment.pdf';
+
+    // Send email to user
+
+    if(email_to_user($recipientUser, $senderUser, $subject, $message,"",$attachement_path,$attachement_name)){
+        return true;
+    } else {
+        return false;
+    }
 }
 
