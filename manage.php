@@ -32,7 +32,7 @@ require_login();
 if (has_capability('moodle/site:config', context_system::instance()) &&
     !has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
         exit;
-    }
+}
 
 $PAGE->set_url(new moodle_url('/local/attendance/manage.php'));
 $PAGE->set_context($context);
@@ -49,6 +49,7 @@ $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/csv.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/filter.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/mail.js'));
 $PAGE->requires->css(new moodle_url('/local/attendance/template.css'));
+// $PAGE->requires->css(new moodle_url('https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css'));
 
 $course = new render();
 $courseData = $course->coursenamedata();
@@ -65,12 +66,14 @@ echo $OUTPUT->header();
 
 $data = [
     'coursetitleData' => $courseData,
-    'emailurl' => new moodle_url('/local/attendance/email.php')
+    'emailurl' => new moodle_url('/local/attendance/email.php'),
+    'chart' => new moodle_url('/local/attendance/chart.php')
 ];
 
 //$mform->display();
 
 echo $OUTPUT->render_from_template('local_attendance/render',$data);
 // echo $OUTPUT->render_from_template('local_attendance/example', $data);
+
 
 echo $OUTPUT->footer();
