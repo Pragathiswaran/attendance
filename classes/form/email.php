@@ -24,35 +24,28 @@ require_once("$CFG->libdir/formslib.php");
 
 class email extends moodleform {
     public function definition() {
-        global $CFG, $DB, $OUTPUT, $PAGE, $USER;
+        global $CFG, $OUTPUT, $PAGE, $USER;
 
         $mform = $this->_form;
         
-        $sql = "SELECT u.username FROM {user} u"; 
-        $users = array();
-        $users[''] = 'Select User'; 
-        $userRecords = $DB->get_records_sql($sql);
-
-        $count = 0; 
-
-        foreach ($userRecords as $user) {
-            $count++;
-
-            if ($count <= 2) {
-                continue;
-            }
-
-            $users[$user->username] = $user->username; 
-        } 
+        // Add form elements
+        $mform->addElement('text', 'email', 'Enter the Email Address'); // Input for email address
+        $mform->setType('email', PARAM_EMAIL); // Set to PARAM_EMAIL to ensure valid email addresses
+        $mform->addRule('email', 'Please enter a valid email address', 'required', null, 'client');
         $mform->addElement('text', 'emailtext', 'Enter the Subject');
-        $mform->addElement('text', 'emailmessage', 'Enter the message');
-        $mform->addElement('select', 'email', 'Select the User',$users);
+        $mform->setType('emailtext', PARAM_TEXT); // Ensure text
+        $mform->addElement('textarea', 'emailmessage', 'Enter the message', 'wrap="virtual" rows="5" cols="50"');
+        $mform->setType('emailmessage', PARAM_TEXT); // Ensure text
 
-        $this->add_action_buttons('Email','Email');
-    
+        // Add action buttons
+        $this->add_action_buttons(true, 'Send Email');
     }
 
-    function validation($data,$files){
-        return array();
+    function validation($data, $files) {
+        $errors = array();
+        if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = 'Invalid email address';
+        }
+        return $errors;
     }
 }
