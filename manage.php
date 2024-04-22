@@ -21,7 +21,7 @@
  * @var stdClass $plugin
  */
 
-require_once(__DIR__.'/../../config.php'); 
+ require_once(__DIR__ . '/../../config.php');
 require_once('lib.php');
 require_once($CFG->dirroot.'/local/attendance/classes/form/email.php');
 require_once($CFG->dirroot.'/local/attendance/classes/render.class.php');
