@@ -69,8 +69,8 @@ foreach ($getAccess as $data) {
                 $minutes = floor(($durationInSeconds % 3600) / 60);
                 $seconds = $durationInSeconds % 60;
                 // Check if hours, minutes, and seconds are plural
-                $hoursPlural = $hours == 1 ? " hour :" : " hours :";
-                $minutesPlural = $minutes == 1 ? " min " : " mins :";
+                $hoursPlural = $hours == 1 ? " hour :" : " hours ";
+                $minutesPlural = $minutes == 1 ? " min " : " mins ";
                 $secondsPlural = $seconds == 1 ? " sec" : " secs";
                 $durationFormatted = $hours . $hoursPlural . $minutes . $minutesPlural . $seconds . $secondsPlural;
             }
