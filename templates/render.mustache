@@ -1,7 +1,7 @@
 <style>
   #title {
     font-size: 40px;
-    font-family: sans-serif;
+    font-family: timesnewroman;
     display: inline-block;
   }
 
@@ -23,7 +23,7 @@
   }
 
   .btn-search.fa.fa-search {
-    width: 10px;
+    width: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -87,17 +87,17 @@
     justify-content: flex-end;
     margin: 20px;
   }
-  .flex flex-row {
-    display:flex;
-    
+
+  .btn-group ml-1
+  {
+    margin-top:2px;
   }
 </style>
 
 <div class="container">
-  <div class="flex flex-row">
-    <h1 id='title'></h1>
-
-    <div class="btn-group ml-1">
+ <h1 id='title'></h1>
+  <div class="d-flex flex-row-reverse">
+    <div class="btn-group ml-1 ">
       <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="glyphicon glyphicon-book"></span> Course <span class="caret"></span>
       </button>
@@ -131,6 +131,7 @@
           <li class="btn btn-chart">Assignment Access</li>
       </ul>
     </div>
+
 
     <div class="btn-group ml-1">
       <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

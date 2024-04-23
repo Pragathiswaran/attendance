@@ -20,7 +20,7 @@ $mform = new email();
 
 if ($mform->is_cancelled()) {
    // redirect($CFG->wwwroot.'/local/attendance/manage.php', 'You have cancelled the form');
-    redirect($CFG->wwwroot.'/local/attendance/manage.php', 'You have cancelled th sendin mail', null, \core\output\notification::NOTIFY_INFO);
+    redirect($CFG->wwwroot.'/local/attendance/manage.php', 'You have cancelled the sending mail', null, \core\output\notification::NOTIFY_INFO);
 } else if ($fromform = $mform->get_data()) {
     if (sendingmail($fromform->email, $fromform->emailtext, $fromform->emailmessage)) {
         // Display a success notification
