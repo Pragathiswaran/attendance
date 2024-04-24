@@ -21,10 +21,12 @@
  * @var stdClass $plugin
  */
 
-require_once(__DIR__.'/../../config.php'); 
+ require_once(__DIR__ . '/../../config.php');
 require_once('lib.php');
 require_once($CFG->dirroot.'/local/attendance/classes/form/email.php');
+// require_once($CFG->dirroot.'/lib/templates/modal.mustache');
 require_once($CFG->dirroot.'/local/attendance/classes/render.class.php');
+// require_once($CFG->dirroot.'/lib/templates/modal.mustache');
 // require_once($CFG->dirroot.'/local/attendance/formlib.php');
 
 
@@ -48,8 +50,9 @@ $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/copy.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/csv.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/filter.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/mail.js'));
+// $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/modal.js'));
 $PAGE->requires->css(new moodle_url('/local/attendance/template.css'));
-// $PAGE->requires->css(new moodle_url('https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css'));
+$PAGE->requires->css(new moodle_url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'));
 
 $course = new render();
 $courseData = $course->coursenamedata();
@@ -67,7 +70,8 @@ echo $OUTPUT->header();
 $data = [
     'coursetitleData' => $courseData,
     'emailurl' => new moodle_url('/local/attendance/email.php'),
-    'chart' => new moodle_url('/local/attendance/chart.php')
+    'chart' => new moodle_url('/local/attendance/chart.php'),
+    'email' => new moodle_url('/local/attendance/amd/src/modal.js')
 ];
 
 //$mform->display();

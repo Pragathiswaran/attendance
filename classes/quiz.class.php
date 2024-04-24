@@ -53,7 +53,7 @@ class quiz{
                 $parts[] = $between->s . ' ' . ($between->s == 1 ? 'sec' : 'secs');
             }
 
-            $duration = implode(' : ', $parts);
+            $duration = implode(' ', $parts);
             $quizData[] = [
                 'userid' => $value->userid,
                 'username' => $value->username,

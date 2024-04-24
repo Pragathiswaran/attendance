@@ -84,7 +84,7 @@ class course {
                     // Duration is less than an hour, but at least a minute, display in minutes and seconds
                     $minutes = floor($durationSeconds / 60);
                     $seconds = $durationSeconds % 60;
-                    $minutesPlural = $minutes == 1 ? " min :" : " mins :";
+                    $minutesPlural = $minutes == 1 ? " min " : " mins ";
                     $secondsPlural = $seconds == 1 ? " sec" : " secs";
                     $durationFormatted = $minutes . $minutesPlural . $seconds . $secondsPlural;
                 } else {
