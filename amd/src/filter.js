@@ -7,7 +7,7 @@ $(document).ready(function(){
       });
   });
 
-  var delay = 2500;
+  var delay = 1000;
   var timeoutId;
 
   $(".search-text").on("input", function() {
@@ -37,12 +37,12 @@ $(document).ready(function(){
     });
 
     if (!found) {
-      $(".search-text").addClass("no-match").attr("placeholder", "No records found.").val("");
+      $(".search-text").addClass("no-match").attr("placeholder", "Sorry , No records found").val("");
       
       setTimeout(function() {
         $("table tbody tr").show();
         $(".search-text").removeClass("no-match").attr("placeholder", "Type to Filter . . .").val("");
-      }, 1000); // 1 seconds
+      }, 1500); // 1 seconds
     } else {
       $(".search-text").removeClass("no-match").attr("placeholder", "Type to Filter . . .");
     }

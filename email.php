@@ -34,8 +34,8 @@ if ($mform->is_cancelled()) {
 // Output the form
 echo $OUTPUT->header();
 //$mform->display();
-$data = (object)[
+$datas = (object)[
     'form' => $mform->display()
 ];
-echo $OUTPUT->render_from_template('local_attendance/example',$data);
+echo $OUTPUT->render_from_template('local_attendance/example',$datas);
 echo $OUTPUT->footer();

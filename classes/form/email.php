@@ -20,32 +20,50 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once("$CFG->libdir/formslib.php"); 
+ require_once("$CFG->libdir/formslib.php"); 
 
-class email extends moodleform {
-    public function definition() {
-        global $CFG, $OUTPUT, $PAGE, $USER;
+ class email extends moodleform {
+     public function definition() {
+         global $CFG, $DB;
+ 
+         $mform = $this->_form;
+ 
+         // Fetch all usernames from the user table
+         $users = $DB->get_records_sql("SELECT username FROM {user}");
+ 
+         $usernames = array();
 
-        $mform = $this->_form;
-        
-        // Add form elements
-        $mform->addElement('text', 'email', 'Enter the Email Address'); // Input for email address
-        $mform->setType('email', PARAM_EMAIL); // Set to PARAM_EMAIL to ensure valid email addresses
-        $mform->addRule('email', 'Please enter a valid email address', 'required', null, 'client');
-        $mform->addElement('text', 'emailtext', 'Enter the Subject');
-        $mform->setType('emailtext', PARAM_TEXT); // Ensure text
-        $mform->addElement('textarea', 'emailmessage', 'Enter the message', 'wrap="virtual" rows="5" cols="50"');
-        $mform->setType('emailmessage', PARAM_TEXT); // Ensure text
+        $count = 0; // Counter to track usernames
 
-        // Add action buttons
-        $this->add_action_buttons(true, 'Send Email');
-    }
+        // Loop through the users to retrieve usernames
+        foreach ($users as $user) {
+            $username = $user->username;
 
-    function validation($data, $files) {
-        $errors = array();
-        if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $errors['email'] = 'Invalid email address';
+            // Skip the first two usernames
+            if ($count < 2) {
+                $count++;
+                continue;
+            }
+
+            // Add username to the array if not empty
+            if (!empty($username)) {
+                $usernames[$username] = $username; // Use username as both key and value
+            }
         }
-        return $errors;
-    }
-}
+ 
+         // Add form elements
+         
+         $mform->addElement('text', 'emailtext', 'Enter the Subject');
+         $mform->addElement('text', 'emailmessage', 'Enter the Message');
+         $mform->addElement('select', 'email', 'Select a User', $usernames);
+ 
+         // Add action buttons
+         $this->add_action_buttons(true, 'Send Email');
+     }
+ 
+     function validation($data, $files) {
+         // Perform validation if needed
+         return array(); // Return empty array if validation is successful
+     }
+ }
+ 
