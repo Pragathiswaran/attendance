@@ -1,102 +1,64 @@
 <?php
 require_once(__DIR__.'/../../config.php');
-require_once($CFG->libdir . '/formslib.php');
+require_once($CFG->dirroot.'/local/attendance/classes/form/chart.php');
 
 echo $OUTPUT->header();
-echo $OUTPUT->heading('User Moodle Access Duration Chart');
-
-class select_user_form extends moodleform {
-    protected function definition() {
-        $mform = $this->_form;
-        
-        // Fetch non-admin users
-        $users = get_non_admin_users();
-        $mform->addElement('select', 'userid', 'Select User:', $users);
-        $mform->setType('userid', PARAM_INT);
-        $mform->addElement('submit', 'submitbutton', 'Show Data');
-    }
-}
-
-function get_non_admin_users() {
+echo $OUTPUT->heading('Coursewise User Access Chart');
+function fetch_course_access_data($userid, $selectedDate) {
     global $DB;
-    $users = [];
-    $all_users = $DB->get_records_sql("SELECT * FROM {user} WHERE deleted = 0 AND suspended = 0 AND id <> 2 AND id <> 1");
-    foreach ($all_users as $user) {
-        if (!in_array($user->id, $admin_ids)) {
-            $users[$user->id] = fullname($user);
-        }
-    }
-    return $users;
-}
+    $startOfDay = strtotime("midnight", $selectedDate);
+    $endOfDay = strtotime("tomorrow", $startOfDay) - 1;
 
-function fetch_user_access_data($userid) {
-    global $DB;
-    $sql = "SELECT FROM_UNIXTIME(timecreated) as timecreated, action 
-            FROM {logstore_standard_log} 
-            WHERE userid = :userid AND action IN ('loggedin', 'loggedout')
-            ORDER BY timecreated ASC";
-    $params = ['userid' => $userid];
+    $sql = "SELECT courseid, COUNT(*) AS access_count
+            FROM {logstore_standard_log}
+            WHERE userid = :userid AND component = 'core' AND action = 'viewed' AND target = 'course'
+                  AND timecreated BETWEEN :start AND :end
+            GROUP BY courseid";
+    $params = ['userid' => $userid, 'start' => $startOfDay, 'end' => $endOfDay];
     $records = $DB->get_records_sql($sql, $params);
 
-    $durations = [];
-    $lastLogin = null;
-
+    $courseAccessData = [];
     foreach ($records as $record) {
-        if ($record->action == 'loggedin') {
-            $lastLogin = new DateTime($record->timecreated);
-        } elseif ($record->action == 'loggedout' && $lastLogin !== null) {
-            $logoutTime = new DateTime($record->timecreated);
-            $duration = $logoutTime->getTimestamp() - $lastLogin->getTimestamp();
-            $date = $lastLogin->format('Y-m-d');
-            if (!isset($durations[$date])) {
-                $durations[$date] = 0;
-            }
-            $durations[$date] += $duration;
-            $lastLogin = null;
+        if ($record->courseid) {
+            $courseName = get_course_name($record->courseid);
+            $courseAccessData[$courseName] = $record->access_count;
         }
     }
+    return $courseAccessData;
+}
 
-    return $durations;
+
+function get_course_name($courseid) {
+    global $DB;
+    $course = $DB->get_record('course', ['id' => $courseid], 'fullname');
+    return $course ? $course->fullname : 'Unknown Course';
 }
 
 $form = new select_user_form();
-
 if ($form->is_cancelled()) {
-    // Handle form cancellation
+    redirect($CFG->wwwroot . '/local/attendance/manage.php');
 } elseif ($fromform = $form->get_data()) {
     $selected_user_id = $fromform->userid;
-    $durations = fetch_user_access_data($selected_user_id);
+    $selected_date = $fromform->date;
 
-    $labels = array_keys($durations);
-    $values = array_values($durations);
+    $courseAccesses = fetch_course_access_data($selected_user_id, $selected_date);
 
-    // Convert seconds to hours
-    $values = array_map(function ($sec) { return round($sec / 3600, 2); }, $values);
+    if (!empty($courseAccesses)) {
+        $labels = array_keys($courseAccesses);
+        $values = array_values($courseAccesses);
 
-    // Create series for the bar chart
-    $access = new \core\chart_series('Daily Access Duration (hours)', $values);
+        $accessSeries = new \core\chart_series('Course Access Count', $values);
+        $chart = new \core\chart_pie();
+        $chart->add_series($accessSeries);
+        $chart->set_labels($labels);
 
-    // Initialize a new bar chart
-    $chart = new \core\chart_bar();
-    $chart->add_series($access);
-    $chart->set_labels($labels);
-
-    // Correctly create and set the axes
-    $xaxis = new \core\chart_axis();
-    $xaxis->set_label('<------- Date ------->');
-    $chart->set_xaxis($xaxis);
-
-    $yaxis = new \core\chart_axis();
-    $yaxis->set_label('<----- Duration in Hours ----->');
-    $chart->set_yaxis($yaxis);
-
-    // Render the chart inside a container
-    echo '<div class="chart-container">';
-    echo $OUTPUT->render($chart);
-    echo '</div>';
-
+        echo '<div class="chart-container" style="width: 600px; height: 400px;">';
+        echo $OUTPUT->render($chart);
+        echo '</div>';
+    } else {
+        echo '<div class="alert alert-info">No data found for the selected date.</div>';
+    }
 } else {
-    // Display the form
     $form->display();
 }
 
