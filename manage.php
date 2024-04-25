@@ -24,7 +24,7 @@
  require_once(__DIR__ . '/../../config.php');
 require_once('lib.php');
 require_once($CFG->dirroot.'/local/attendance/classes/form/email.php');
-// require_once($CFG->dirroot.'/lib/templates/modal.mustache');
+// require_once($CFG->libdir.'/templates/modal.mustache');
 require_once($CFG->dirroot.'/local/attendance/classes/render.class.php');
 // require_once($CFG->dirroot.'/lib/templates/modal.mustache');
 // require_once($CFG->dirroot.'/local/attendance/formlib.php');
