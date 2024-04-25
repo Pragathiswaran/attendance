@@ -50,8 +50,11 @@ tbody{
       color: red; 
   }
 
+<<<<<<< Updated upstream
   .filter-container{
     display: flex;
     justify-content: flex-end;
     margin: 20px;
   }
+=======
+>>>>>>> Stashed changes
