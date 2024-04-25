@@ -25,7 +25,7 @@
 .search-text:focus{
     background:#fff;
 }
-.btn-search{
+.btn-search{<<<<<<<
     background-color: rgb(77, 77, 255);
     color:white;
     border-radius: 0 5px 5px 0;
@@ -50,8 +50,11 @@ tbody{
       color: red; 
   }
 
-  /* .filter-container{
+
+
+  .filter-container{
     display: flex;
     justify-content: flex-end;
     margin: 20px;
-  } */
+  }
+

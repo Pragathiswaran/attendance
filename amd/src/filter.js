@@ -37,7 +37,7 @@ $(document).ready(function(){
     });
 
     if (!found) {
-      $(".search-text").addClass("no-match").attr("placeholder", "Sorry , No records found").val("");
+      $(".search-text").addClass("no-match").attr("placeholder", "No records found").val("");
       
       setTimeout(function() {
         $("table tbody tr").show();
