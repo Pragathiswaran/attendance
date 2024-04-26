@@ -92,8 +92,8 @@ class course {
                     $hours = floor($durationSeconds / 3600);
                     $minutes = floor(($durationSeconds % 3600) / 60);
                     $seconds = $durationSeconds % 60;
-                    $hoursPlural = $hours == 1 ? " hour :" : " hours :";
-                    $minutesPlural = $minutes == 1 ? " min :" : " mins :";
+                    $hoursPlural = $hours == 1 ? " hour " : " hours :";
+                    $minutesPlural = $minutes == 1 ? " min " : " mins :";
                     $secondsPlural = $seconds == 1 ? " sec" : " secs";
                     $durationFormatted = $hours . $hoursPlural . $minutes . $minutesPlural . $seconds . $secondsPlural;
                 }

@@ -67,8 +67,7 @@ $data =(object) [
     'coursetitleData' => $courseData,
     'emailurl' => new moodle_url('/local/attendance/email.php'),
     'chart' => new moodle_url('/local/attendance/chart.php'),
-    'email' => new moodle_url('/local/attendance/amd/src/modal.js'),
-    // 'modalform' => $mform->display()
+    'email' => new moodle_url('/local/attendance/amd/src/modal.js')
 ];
 
 
