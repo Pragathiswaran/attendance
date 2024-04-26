@@ -1,7 +1,7 @@
 <style>
   #title 
   {
-    font-size: 40px;
+    font-size: 50px;
     font-family: timesnewroman;
     display: inline-block;
   }
@@ -58,10 +58,12 @@
   }
   .btn-search 
   {
+    hight:35px;
     background-color: rgb(77, 77, 255);
     color: white;
-    border-radius: 0 5px 5px 0;
-    border: 1px solid rgb(77, 77, 255);
+    outline:none;
+    border:none;
+    border-rasius:0 5px 5px 0;
   }
   .btn 
   {
@@ -82,7 +84,10 @@
   .dropdown-menu
    {
     display: none;
-}
+    min-width: 200px; 
+    max-height: 120px; 
+    overflow-y: auto;
+  }
 .dropdown-menu li
  {
     display: block;
@@ -94,9 +99,8 @@
     text-decoration: none;
     color: #333;
 }
-.dropdown-menu li a:hover
- {
-    background-color: #f5f5f5;
+.dropdown-menu li a:hover {
+  background-color: #f5f5f5;
 }
 </style>
 
@@ -111,7 +115,7 @@
         </button>
         <ul class="dropdown-menu">
             {{#coursetitleData}}
-            <li class="btn btn-value">{{coursenames}}</li>
+            <li><button class="btn btn-value">{{coursenames}}</button></li>
             {{/coursetitleData}}
         </ul>
       </div>
@@ -121,22 +125,20 @@
           <i class="fa-brands fa-wpforms"></i> Report <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <li class="btn btn-options">Login</li>
-            <li class="btn btn-options">Course</li>
-            <li class="btn btn-options">Quiz</li>
-            <li class="btn btn-options">Assignment</li>
+            <li><button class="btn btn-options">Login</button></li>
+            <li><button class="btn btn-options">Course</button></li>
+            <li><button class="btn btn-options">Quiz</button></li>
+            <li><button class="btn btn-options">Assignment</button></li>
         </ul>
       </div>
   
       <div class="btn-group ml-1 ">
-        <button class="btn btn-warning dropdown-toggle " type="button" aria-haspopup="true" aria-expanded="false" onclick="location.href='{{chart}}'">
+        <button class="btn btn-warning dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
           <i class="fa-solid fa-chart-simple"></i> Chart <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-              <li class="btn btn-chart" onclick="location.href='{{chart}}'">Login</li>
-              <li class="btn btn-chart">Course Access</li>
-              <li class="btn btn-chart">Quiz Access</li>
-              <li class="btn btn-chart">Assignment Access</li>
+              <li> <button class="btn btn-options" onclick="location.href='{{chart}}'">Pie Chart</button></li>
+              <li><button class="btn btn-options">Bar Chart</button></li>
           </ul>
       </div>
   
@@ -156,7 +158,8 @@
       </div>
     </div>
     <div class="search">
-      <input type="text" class="search-text" placeholder="Type to Filter . . .">
+      <a href="#" title="Header" data-toggle="popover" data-trigger="hover" data-content="Some content">Hover over me</a>
+      <input type="text" class="search-text" placeholder="Type to Filter . . ."> 
       <button class="btn btn-search fa fa-search" type="button"></button>
     </div>
   </div>
