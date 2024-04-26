@@ -37,5 +37,5 @@ echo $OUTPUT->header();
 $datas = (object)[
     'form' => $mform->display()
 ];
-echo $OUTPUT->render_from_template('local_attendance/example',$datas);
+echo $OUTPUT->render_from_template('local_attendance/example',"hello");
 echo $OUTPUT->footer();

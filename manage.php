@@ -28,6 +28,7 @@ require_once($CFG->dirroot.'/local/attendance/classes/form/email.php');
 require_once($CFG->dirroot.'/local/attendance/classes/render.class.php');
 // require_once($CFG->dirroot.'/lib/templates/modal.mustache');
 // require_once($CFG->dirroot.'/local/attendance/formlib.php');
+// require_once($CFG->dirroot.'/local/attendance/classes/form/email.php');
 
 
 require_login();
@@ -57,27 +58,20 @@ $PAGE->requires->css(new moodle_url('https://cdnjs.cloudflare.com/ajax/libs/font
 $course = new render();
 $courseData = $course->coursenamedata();
 
-/*
+
 $mform = new email();
 
-if ($mform->is_cancelled()) {
-    redirect($CFG->wwwroot.'/index.php', 'You have cancelled the form');
-}
-
-*/
 echo $OUTPUT->header();
 
-$data = [
+$data =(object) [
     'coursetitleData' => $courseData,
     'emailurl' => new moodle_url('/local/attendance/email.php'),
     'chart' => new moodle_url('/local/attendance/chart.php'),
-    'email' => new moodle_url('/local/attendance/amd/src/modal.js')
+    'email' => new moodle_url('/local/attendance/amd/src/modal.js'),
+    // 'modalform' => $mform->display()
 ];
 
-//$mform->display();
 
 echo $OUTPUT->render_from_template('local_attendance/render',$data);
-// echo $OUTPUT->render_from_template('local_attendance/example', $data);
-
 
 echo $OUTPUT->footer();
