@@ -36,3 +36,6 @@ $string['accesscount'] = 'Number of Accesses';
 $string['newfeature'] = 'Description of new feature';
 $string['totaltimespent'] = 'Total Duration (HH:MM:SS)';
 $string['reports'] = 'Reports';
+$string['selectcourse'] = 'Select_Course';
+$string['selectdate'] = 'Select_Date';
+

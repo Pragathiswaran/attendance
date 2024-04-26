@@ -1,6 +1,6 @@
 <?php
 require_once(__DIR__.'/../../config.php');
-require_once($CFG->dirroot.'/local/attendance/classes/form/chart.php');
+require_once($CFG->dirroot.'/local/attendance/classes/form/pie_chart.php');
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading('Coursewise User Access Chart');
