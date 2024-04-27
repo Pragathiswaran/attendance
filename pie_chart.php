@@ -2,8 +2,10 @@
 require_once(__DIR__.'/../../config.php');
 require_once($CFG->dirroot.'/local/attendance/classes/form/pie_chart.php');
 
+$PAGE->set_heading('Coursewise User Access Chart');
+
 echo $OUTPUT->header();
-echo $OUTPUT->heading('Coursewise User Access Chart');
+
 function fetch_course_access_data($userid, $selectedDate) {
     global $DB;
     $startOfDay = strtotime("midnight", $selectedDate);
