@@ -34,7 +34,8 @@ function get_non_admin_users() {
     $sql = "SELECT id, firstname, lastname 
             FROM {user} 
             WHERE deleted = 0 AND suspended = 0 
-            AND username <> 'guest' 
+            AND username <> 'guest'
+            AND username <> 'admin'
             AND id NOT IN (
                 SELECT ra.userid
                 FROM {role_assignments} ra
