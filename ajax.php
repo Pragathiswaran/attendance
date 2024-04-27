@@ -5,17 +5,16 @@ require_once($CFG->dirroot.'/local/attendance/classes/course.class.php');
 require_login();
 
 $coursename = optional_param('coursename', null, PARAM_TEXT);
-echo $cousername;
+// echo $cousername;
 
 $attendance = new course();
 
 $userCourseAccessData = $attendance->getUserCourseActivity($coursename);
 
 foreach($userCourseAccessData as $data){
-    if ($data['userid'] === $USER->id) 
-            {
-                continue;
-            }
+    if ($data['userid'] === $USER->id) {
+        continue;
+    }
     echo"<tr>";
     echo"<td>".$data['userid']."</td>";
     echo"<td>".$data['username']."</td>";

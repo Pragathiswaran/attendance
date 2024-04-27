@@ -1,6 +1,6 @@
 function exportToExcel() {
     // Get the table element by its ID
-    const table = document.getElementById("#example");
+    const table = document.querySelector("#example");
     if (!table) {
         console.error('Table element not found.');
         return;

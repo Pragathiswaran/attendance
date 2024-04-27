@@ -7,7 +7,7 @@ $(document).ready(function(){
       });
   });
 
-  var delay = 1000;
+  var delay = 200;
   var timeoutId;
 
   $(".search-text").on("input", function() {

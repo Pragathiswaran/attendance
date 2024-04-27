@@ -13,7 +13,6 @@ if($option === 'Login'){
     $login = new access();
     $loginData = $login->getAccess();
     echo "
-   
     <thead>
         <tr>
             <th>userid</th>
@@ -98,7 +97,6 @@ if($option === 'Login'){
         echo "</tr>";
         echo "</tbody>";
     }
-
 
 }else if($option === 'Assignment'){
     echo"
