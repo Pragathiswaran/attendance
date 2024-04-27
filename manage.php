@@ -54,10 +54,9 @@ $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/mail.js'));
 // $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/modal.js'));
 $PAGE->requires->css(new moodle_url('/local/attendance/template.css'));
 $PAGE->requires->css(new moodle_url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'));
-
+// $PAGE->requires->css(new moodle_url('https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css'));
 $course = new render();
 $courseData = $course->coursenamedata();
-
 
 $mform = new email();
 
@@ -66,10 +65,9 @@ echo $OUTPUT->header();
 $data =(object) [
     'coursetitleData' => $courseData,
     'emailurl' => new moodle_url('/local/attendance/email.php'),
-    'chart' => new moodle_url('/local/attendance/chart.php'),
-    'email' => new moodle_url('/local/attendance/amd/src/modal.js')
+    'piechart' => new moodle_url('/local/attendance/pie_chart.php'),
+    'barchart' => new moodle_url('/local/attendance/bar_chart.php'),
 ];
-
 
 echo $OUTPUT->render_from_template('local_attendance/render',$data);
 
