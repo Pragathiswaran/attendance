@@ -13,8 +13,11 @@ function fetch_course_access_durations($courseid, $selectedDate) {
     $startOfDay = strtotime("midnight", $selectedDate);
     $endOfDay = strtotime("tomorrow", $startOfDay) - 1;
 
-    // First, fetch all user durations for the course within the specified day.
-    $sql = "SELECT userid, SUM(timecreated - timecreated % 60) AS duration
+    // Assuming you have a way to determine the session length, e.g., average or fixed duration per view
+    $viewDurationInSeconds = 60; // Assuming each 'view' is logged and equates to a minute spent.
+
+    // Fetch all user sessions for the course within the specified day.
+    $sql = "SELECT userid, COUNT(*) AS views
             FROM {logstore_standard_log}
             WHERE courseid = :courseid AND action = 'viewed' AND target = 'course'
                   AND timecreated BETWEEN :start AND :end
@@ -32,11 +35,12 @@ function fetch_course_access_durations($courseid, $selectedDate) {
         $context = context_course::instance($courseid);
         if (!has_capability('moodle/course:update', $context, $record->userid)) {
             $userName = get_user_name($record->userid);
-            $durationData[$userName] = round($record->duration); // Convert seconds to hours, rounded to 2 decimals
+            $totalDuration = $record->views * $viewDurationInSeconds; // Calculate total duration
+            $durationData[$userName] = $totalDuration; // Store duration in seconds
         }
     }
     return $durationData;
-}
+}    
 
 function get_user_name($userid) {
     global $DB;

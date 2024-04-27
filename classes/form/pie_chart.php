@@ -1,7 +1,6 @@
-
 <?php
 require_once("$CFG->libdir/formslib.php");
-require_once($CFG->dirroot.'/user/lib.php');
+require_once($CFG->dirroot . '/user/lib.php');
 require_once($CFG->libdir . '/accesslib.php'); // Required for capability checking functions
 
 class select_user_form extends moodleform {
@@ -9,22 +8,14 @@ class select_user_form extends moodleform {
         global $DB, $USER, $COURSE;
         $mform = $this->_form;
 
-        // Check if the user has the capability to update the course
-        if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
-            // Fetch users enrolled in the specific course
-            $users = get_course_users($COURSE->id);
-        } else {
-            // Fetch non-admin users
-            $users = get_non_admin_users();
-        }
-
-        // Prepare an array for dropdown options
+        // Fetch non-admin users
+        $users = get_non_admin_users();
         $useroptions = [];
         foreach ($users as $user) {
-            $useroptions[$user->id] = fullname($user); // Use Moodle's fullname function to display full user names
+            $useroptions[$user->id] = $user->firstname . ' ' . $user->lastname;
         }
 
-        // Adding user dropdown
+        // Add a select element with the user options
         $mform->addElement('select', 'userid', 'Select User:', $useroptions);
         $mform->setType('userid', PARAM_INT);
 
@@ -38,16 +29,18 @@ class select_user_form extends moodleform {
     }
 }
 
-function get_course_users($course_id) {
-    global $DB;
-    $enrolled_users = get_enrolled_users(context_course::instance($course_id), 'mod/assign:view', 0, 'u.id, u.firstname, u.lastname');
-    return $enrolled_users;
-}
-
 function get_non_admin_users() {
     global $DB;
-    $sql = "SELECT id, firstname, lastname FROM {user} WHERE deleted = 0 AND suspended = 0 AND id NOT IN (1, 2)";
-    $all_users = $DB->get_records_sql($sql);
-    return $all_users;
+    $sql = "SELECT id, firstname, lastname 
+            FROM {user} 
+            WHERE deleted = 0 AND suspended = 0 
+            AND username <> 'guest' 
+            AND id NOT IN (
+                SELECT ra.userid
+                FROM {role_assignments} ra
+                JOIN {role} r ON ra.roleid = r.id
+                JOIN {context} ctx ON ra.contextid = ctx.id
+                WHERE r.shortname = 'admin' AND ctx.contextlevel = 10
+            )";
+    return $DB->get_records_sql($sql);
 }
-
