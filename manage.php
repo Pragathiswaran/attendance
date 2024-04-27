@@ -68,7 +68,14 @@ $data =(object) [
     'piechart' => new moodle_url('/local/attendance/pie_chart.php'),
     'barchart' => new moodle_url('/local/attendance/bar_chart.php'),
 ];
+if (has_capability('moodle/site:config', context_system::instance()))
+{
+    echo $OUTPUT->render_from_template('local_attendance/render',$data);
+}
+else{
+    echo $OUTPUT->render_from_template('local_attendance/renders',$data);
+}
 
-echo $OUTPUT->render_from_template('local_attendance/render',$data);
+
 
 echo $OUTPUT->footer();

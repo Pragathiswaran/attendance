@@ -58,32 +58,38 @@ if($option === 'Login'){
     <tbody id='testrender' style='color:black; font-size:14px;'>
     </tbody>
     ";
-}else if($option === 'Quiz'){
-    echo"
+}else if ($option === 'Quiz') {
+    // Display the table headers
+    echo "
     <table id='example'>
     <thead>
         <tr>
         <th>".get_string('userid', 'local_attendance')."</th>
         <th>".get_string('username', 'local_attendance')."</th>
         <th>".get_string('coursename', 'local_attendance')."</th>
-            <th>Quiz Name</th>
-            <th>Date</th>
-            <th>Time Start</th>
-            <th>Time End</th>
-            <th>Duration</th>
+        <th>Quiz Name</th>
+        <th>Date</th>
+        <th>Time Start</th>
+        <th>Time End</th>
+        <th>Duration</th>
         </tr>
     </thead>
     <tbody style='color:black; font-size:14px;'>
     </tbody>
     </table>
     ";
+
+    // Instantiate the quiz class and fetch data
     $quiz = new quiz();
     $quizData = $quiz->quizAttempt();
-    foreach($quizData as $data){
-        if ($data['userid'] === $USER->id) 
-            {
-                continue;
-            }
+
+    // Loop through the quiz data
+    foreach ($quizData as $data) {
+        // Check if current user is the same as the data user (skip if so)
+        if ($data['userid'] === $USER->id) {
+            continue;
+        }
+        // Output the table rows
         echo "<tbody style='color:black; font-size:14px;'>";
         echo "<tr>";
         echo "<td>".$data['userid']."</td>";
@@ -97,8 +103,8 @@ if($option === 'Login'){
         echo "</tr>";
         echo "</tbody>";
     }
-
-}else if($option === 'Assignment'){
+}
+else if($option === 'Assignment'){
     echo"
     <table class='generaltable'>
     <thead>
