@@ -133,14 +133,12 @@
       </div>
   
       <div class="btn-group ml-1 ">
-        <button class="btn btn-warning dropdown-toggle " type="button" aria-haspopup="true" aria-expanded="false" onclick="location.href='{{chart}}'">
+        <button class="btn btn-warning dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
           <i class="fa-solid fa-chart-simple"></i> Chart <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-              <li class="btn btn-chart" onclick="location.href='{{chart}}'">Login</li>
-              <li class="btn btn-chart">Course Access</li>
-              <li class="btn btn-chart">Quiz Access</li>
-              <li class="btn btn-chart">Assignment Access</li>
+              <li> <button class="btn btn-chart" onclick="location.href='{{piechart}}'">Pie Chart</button></li>
+              <li><button class="btn btn-chart" onclick="location.href='{{barchart}}'">Bar Chart</button></li>
           </ul>
       </div>
   
@@ -171,3 +169,4 @@
 </table>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+
