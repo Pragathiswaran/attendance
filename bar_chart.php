@@ -3,8 +3,10 @@ require_once(__DIR__.'/../../config.php');
 require_once($CFG->dirroot.'/lib/formslib.php');
 require_once($CFG->dirroot.'/local/attendance/classes/form/bar_chart.php');
 
+$PAGE->set_heading('Users Course Access');
+
 echo $OUTPUT->header();
-echo $OUTPUT->heading('Users Course Access');
+
 
 function fetch_course_access_durations($courseid, $selectedDate) {
     global $DB;

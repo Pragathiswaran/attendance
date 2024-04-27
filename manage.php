@@ -66,7 +66,8 @@ echo $OUTPUT->header();
 $data =(object) [
     'coursetitleData' => $courseData,
     'emailurl' => new moodle_url('/local/attendance/email.php'),
-    'chart' => new moodle_url('/local/attendance/chart.php'),
+    'barchart' => new moodle_url('/local/attendance/bar_chart.php'),
+    'piechart' => new moodle_url('/local/attendance/pie_chart.php'),
     'email' => new moodle_url('/local/attendance/amd/src/modal.js')
 ];
 

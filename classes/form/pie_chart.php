@@ -1,16 +1,31 @@
+
 <?php
 require_once("$CFG->libdir/formslib.php");
+require_once($CFG->dirroot.'/user/lib.php');
+require_once($CFG->libdir . '/accesslib.php'); // Required for capability checking functions
 
 class select_user_form extends moodleform {
     protected function definition() {
-        global $DB; // Include this if you need direct database access within this method
+        global $DB, $USER, $COURSE;
         $mform = $this->_form;
 
-        // Fetch non-admin users
-        $users = get_non_admin_users();
-        
+        // Check if the user has the capability to update the course
+        if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
+            // Fetch users enrolled in the specific course
+            $users = get_course_users($COURSE->id);
+        } else {
+            // Fetch non-admin users
+            $users = get_non_admin_users();
+        }
+
+        // Prepare an array for dropdown options
+        $useroptions = [];
+        foreach ($users as $user) {
+            $useroptions[$user->id] = fullname($user); // Use Moodle's fullname function to display full user names
+        }
+
         // Adding user dropdown
-        $mform->addElement('select', 'userid', 'Select User:', $users);
+        $mform->addElement('select', 'userid', 'Select User:', $useroptions);
         $mform->setType('userid', PARAM_INT);
 
         // Adding a date selector to the form
@@ -23,15 +38,16 @@ class select_user_form extends moodleform {
     }
 }
 
+function get_course_users($course_id) {
+    global $DB;
+    $enrolled_users = get_enrolled_users(context_course::instance($course_id), 'mod/assign:view', 0, 'u.id, u.firstname, u.lastname');
+    return $enrolled_users;
+}
+
 function get_non_admin_users() {
     global $DB;
-    $users = [];
-    // Fetch all users that are not deleted or suspended and are not admin users
-    $sql = "SELECT * FROM {user} WHERE deleted = 0 AND suspended = 0 AND id NOT IN (1, 2)"; // ID 1 and 2 usually refer to admin accounts in Moodle
+    $sql = "SELECT id, firstname, lastname FROM {user} WHERE deleted = 0 AND suspended = 0 AND id NOT IN (1, 2)";
     $all_users = $DB->get_records_sql($sql);
-    foreach ($all_users as $user) {
-        $users[$user->id] = fullname($user); // Assuming fullname is a valid function that combines first name and last name
-    }
-    return $users;
+    return $all_users;
 }
 
