@@ -22,49 +22,6 @@
    {
     margin-right: 0;
   }
-  .btn-search.fa.fa-search
-   {
-    width: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
-    color:white;
-  }
-  .search
-   {
-    height: 35px;
-    max-width: 300px;
-    display: inline-flex;
-    margin-left: 10px;
-  }
-  .search-text
-   {
-    padding: 10px;
-    width: 220px;
-    outline: none;
-    border: 1px solid rgb(77, 77, 255);
-    border-radius: 5px 0 0 5px;
-    transition: 0.5s;
-    background-color: rgb(77, 77, 255, 0.1);
-  }
-  .search-text::placeholder
-   {
-    color: rgb(77, 77, 255);
-  }
-  .search-text:focus
-   {
-    background: #fff;
-  }
-  .btn-search 
-  {
-    hight:35px;
-    background-color: rgb(77, 77, 255);
-    color: white;
-    outline:none;
-    border:none;
-    border-rasius:0 5px 5px 0;
-  }
   .btn 
   {
     border-radius:4px;
@@ -102,6 +59,53 @@
 .dropdown-menu li a:hover {
   background-color: #f5f5f5;
 }
+thead {
+text-align: center;
+background-color: #8b96a3;
+color: white;
+font-size: 17px; 
+text-transform: capitalize;
+}
+tbody{
+  font-size: 14px;
+  text-align:center;
+  text-transform: capitalize;
+}
+.search-text.no-match::placeholder{
+    color: red; 
+}
+.filter-container{
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px;
+}
+.search-bar{
+  max-width:300px;
+  display:inline-flex;
+}
+.search-text{
+  padding:6px;
+  outline:none;
+  border:1px solid #007bff;
+  border-radius:5px 0 0 5px;
+  transition:0.5s;
+  background-color:rgba(0, 123, 255,0.1);
+}
+.search-text::placeholder{
+  color:#007bff;
+  padding:4px;
+}
+.search-text:focus{
+  background-color:#fff;
+}
+.btn-search{
+  width:35px;
+  background-color:#007bff;
+  outline:none;
+  border:none;
+  color:white;
+  border-radius:0 5px 5px 0;
+}
 </style>
 
 
@@ -110,7 +114,7 @@
   <div class="d-flex flex-row justify-content-between align-items-center" style="margin-top:15px;">
     <div>
       <div class="btn-group">
-        <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa-solid fa-book-open"></i> Course <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
@@ -121,7 +125,7 @@
       </div>
   
       <div class="btn-group ml-1">
-        <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa-brands fa-wpforms"></i> Report <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
@@ -133,7 +137,7 @@
       </div>
   
       <div class="btn-group ml-1 ">
-        <button class="btn btn-warning dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+        <button class="btn btn-primary dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
           <i class="fa-solid fa-chart-simple"></i> Chart <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
@@ -144,7 +148,7 @@
   
   
       <div class="btn-group ml-1">
-        <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa-solid fa-file-export"></i> Export <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
@@ -157,10 +161,11 @@
         </ul>
       </div>
     </div>
-    <div class="search">
-      <a href="#" title="Header" data-toggle="popover" data-trigger="hover" data-content="Some content">Hover over me</a>
+    <div class="search-bar">
       <input type="text" class="search-text" placeholder="Type to Filter . . ."> 
-      <button class="btn btn-search fa fa-search" type="button"></button>
+      <button class="btn-search" type="button">
+        <i class="fa fa-filter"></i>
+      </button>
     </div>
   </div>
 </div>
