@@ -1,3 +1,8 @@
+/**
+ * @module     local_attendance
+ * @copyright  Pragathiswaran Ramyasri Rukkesh
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 jQuery(document).ready(function() {
     function handleButtonClick() {
         var coursename = $(this).text().trim(); 

@@ -1,110 +1,19 @@
-<style>
-  #title 
-  {
-    font-size: 37px;
-    font-family: Arial, sans-serif;
-    display: inline-block;
-  }
-  .btn-group 
-  {
-    margin-left: 10px;
-    display: inline-block;
-  }
-  .btn-group:first-child
-   {
-    margin-left: 0;
-  }
-  .btn-group:last-child
-   {
-    margin-right: 0;
-  }
-  .btn 
-  {
-    border-radius:4px;
-    font-size:16px;
-    color: white;
-    border: none;
-    padding-top:4px;
-  }
-  .btn:not(.dropdown-toggle)
-  {
-    border-radius:4px;
-    font-weight:bold;
-    font-size:16px;
-    color: black;
-    border: none;
-  }
-  .dropdown-menu
-   {
-    display: none;
-    min-width: 200px; 
-    max-height: 120px; 
-    overflow-y: auto;
-  }
-.dropdown-menu li
- {
-    display: block;
-}
-.dropdown-menu li a
- {
-    display: block;
-    padding: 6px 20px;
-    text-decoration: none;
-    color: #333;
-}
-.dropdown-menu li a:hover {
-  background-color: #f5f5f5;
-}
-thead {
-text-align: center;
-background-color: #8b96a3;
-color: white;
-font-size: 17px; 
-text-transform: capitalize;
-}
-tbody{
-  font-size: 14px;
-  text-align:center;
-  text-transform: capitalize;
-}
-.search-text.no-match::placeholder{
-    color: red; 
-}
-.filter-container{
-  display: flex;
-  justify-content: flex-end;
-  margin: 20px;
-}
-.search-bar{
-  max-width:300px;
-  display:inline-flex;
-}
-.search-text{
-  padding:6px;
-  outline:none;
-  border:1px solid #007bff;
-  border-radius:5px 0 0 5px;
-  transition:0.5s;
-  background-color:rgba(0, 123, 255,0.1);
-}
-.search-text::placeholder{
-  color:#007bff;
-  padding:4px;
-}
-.search-text:focus{
-  background-color:#fff;
-}
-.btn-search{
-  width:35px;
-  background-color:#007bff;
-  outline:none;
-  border:none;
-  color:white;
-  border-radius:0 5px 5px 0;
-}
-</style>
+{{!
+  This file is part of Moodle - https://moodle.org/
 
+  Moodle is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
+  Moodle is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
 <div class="mb-4">
  <h1 id='title' class="mb-3"></h1>
   <div class="d-flex flex-row justify-content-between align-items-center" style="margin-top:15px;">
