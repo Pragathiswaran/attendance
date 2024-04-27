@@ -18,9 +18,11 @@ $senderUser = $USER; // Assuming $USER is the currently logged-in user
 // Email parameters
 $subject = $emailtext;
 $message = $emailmessage;
+$attachmentname = 'Attendance_Report.pdf';
+$path = __DIR__.'/output.pdf';
 // Send email to user
 
-if(email_to_user($recipientUser, $senderUser, $subject, $message)){
+if(email_to_user($recipientUser, $senderUser, $subject, $message,"",$path, $attachmentname)){
     //echo "success";
     return true;
 } else {
