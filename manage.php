@@ -46,6 +46,7 @@ $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/print.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/copy.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/csv.js'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/filter.js'));
+$PAGE->requires->js(new moodle_url('/local/attendance/amd/src/pdf.js'));
 $PAGE->requires->css(new moodle_url('/local/attendance/template.css'));
 $PAGE->requires->css(new moodle_url('/local/attendance/template.css'));
 $PAGE->requires->js(new moodle_url('/local/attendance/amd/src/dropdown.js'));
@@ -83,10 +84,10 @@ if ($mform->is_cancelled()) {
     redirect($CFG->wwwroot.'/local/attendance/manage.php');
  } else if ($fromform = $mform->get_data()) {
     if (sendingmail($fromform->email, $fromform->emailtext, $fromform->emailmessage)) {
-        redirect($CFG->wwwroot.'/local/attendance/manage.php', 'form submitted', null, \core\output\notification::NOTIFY_SUCCESS);
+        redirect($CFG->wwwroot.'/local/attendance/manage.php', 'Mail Sent Successfully', null, \core\output\notification::NOTIFY_SUCCESS);
         
     } else {
-        redirect($CFG->wwwroot.'/local/attendance/manage.php', 'form not submitted', null, \core\output\notification::NOTIFY_ERROR);
+        redirect($CFG->wwwroot.'/local/attendance/manage.php', 'Error While Sending Mail', null, \core\output\notification::NOTIFY_ERROR);
     }
    
  }
