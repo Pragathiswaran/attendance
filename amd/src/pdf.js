@@ -4,7 +4,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-const button = document.getElementById('id_submitbutton');
+const button = document.getElementById('btn-Email');
         button.addEventListener('click', function() {
             generatePDF();
         });

@@ -19,8 +19,8 @@ jQuery(document).ready(function() {
             }
         });
     }
-    $('.btn-value').click(handleButtonClick);
+    $('').click(handleButtonClick);
 
-    $('.btn-value:first').trigger('click');
+    $('').trigger('click');
 });
 
