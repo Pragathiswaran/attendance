@@ -45,8 +45,8 @@
           <i class="fa-solid fa-chart-simple"></i> Chart <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-              <li> <button class="btn btn-chart" onclick="location.href='{{piechart}}'">Pie Chart</button></li>
-              <li><button class="btn btn-chart" onclick="location.href='{{barchart}}'">Bar Chart</button></li>
+              <li> <button class="btn btn-chart dropdown-item" onclick="location.href='{{piechart}}'">Pie Chart</button></li>
+              <li><button class="btn btn-chart dropdown-item" onclick="location.href='{{barchart}}'">Bar Chart</button></li>
           </ul>
       </div>
   
@@ -56,12 +56,12 @@
           <i class="fa-solid fa-file-export"></i> Export <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <li><button class="btn btn-filepdf">PDF</button></li>
-            <li><button class="btn btn-file" onclick="exportToExcel()">EXCEL</button></li>
-            <li><button class="btn btn-file" onclick="copyTable()">COPY</button></li>
-            <li><button class="btn btn-file" onclick="exportTocsv()">CSV</button></li>
-            <li><button class="btn btn-file" onclick="printTable()">PRINT</button></li>
-            <li><button class="btn btn-file" data-toggle="modal" data-target="#ModalCenter" id='btn-Email'>EMAIL</button></li>
+            <li><button class="btn btn-filepdf dropdown-item">PDF</button></li>
+            <li><button class="btn btn-file dropdown-item" onclick="exportToExcel()">EXCEL</button></li>
+            <li><button class="btn btn-file dropdown-item" onclick="copyTable()">COPY</button></li>
+            <li><button class="btn btn-file dropdown-item" onclick="exportTocsv()">CSV</button></li>
+            <li><button class="btn btn-file dropdown-item" onclick="printTable()">PRINT</button></li>
+            <li><button class="btn btn-file dropdown-item" data-toggle="modal" data-target="#ModalCenter" id='btn-Email'>EMAIL</button></li>
         </ul>
       </div>
     </div>

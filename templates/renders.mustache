@@ -14,56 +14,59 @@
   You should have received a copy of the GNU General Public License
   along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
+
 <div class="mb-4">
  <h1 id='title' class="mb-3"></h1>
   <div class="d-flex flex-row justify-content-between align-items-center" style="margin-top:15px;">
     <div>
-      <div class="btn-group">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa-solid fa-book-open"></i> Course <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            {{#coursetitleData}}
-            <li><button class="btn btn-value">{{coursenames}}</button></li>
-            {{/coursetitleData}}
-        </ul>
+    <div class="dropdown btn-group ml-1">
+      <button class="btn btn-primary dropdown-toggle" type="button" id="mainDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fab fa-wpforms"></i> Report
+      </button>
+      <div class="dropdown-menu" aria-labelledby="mainDropdown">
+          <div class="dropdown-submenu">
+              <a class="btn dropdown-item" id="option2Dropdown" aria-expanded="false">
+                  Course
+              </a>
+              <div class="dropdown-menu" aria-labelledby="option2Dropdown">
+                {{#coursetitleData}}
+                <li class="btn btn-value dropdown-item">{{coursenames}}</li>
+                {{/coursetitleData}}
+              </div>
+          </div>
+          <a class="btn btn-options dropdown-item" href="#">Quiz</a>
+          <a class="btn btn-options dropdown-item" href="#">Assignment</a>
       </div>
-  
-      <div class="btn-group ml-1">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa-brands fa-wpforms"></i> Report <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            
-            <li><button class="btn btn-options">Course</button></li>
-            <li><button class="btn btn-options">Quiz</button></li>
-            <li><button class="btn btn-options">Assignment</button></li>
-        </ul>
-      </div>
+    </div>
   
       <div class="btn-group ml-1 ">
-        <button class="btn btn-primary" style="color:white; font-weight:normal;" type="button"onclick="location.href='{{barchart}}'"  aria-haspopup="true" aria-expanded="false" >
+        <button class="btn btn-primary  dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
           <i class="fa-solid fa-chart-simple"></i> Chart <span class="caret"></span>
           </button>
+          <ul class="dropdown-menu">
+              <li> <button class="btn btn-chart dropdown-item" onclick="location.href='{{piechart}}'">Pie Chart</button></li>
+              <li><button class="btn btn-chart dropdown-item" onclick="location.href='{{barchart}}'">Bar Chart</button></li>
+          </ul>
       </div>
+  
   
       <div class="btn-group ml-1">
         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa-solid fa-file-export"></i> Export <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <li><button class="btn btn-filepdf">PDF</button></li>
-            <li><button class="btn btn-file" onclick="exportToExcel()">EXCEL</button></li>
-            <li><button class="btn btn-file" onclick="copyTable()">COPY</button></li>
-            <li><button class="btn btn-file" onclick="exportTocsv()">CSV</button></li>
-            <li><button class="btn btn-file" onclick="printTable()">PRINT</button></li>
-            <li><button class="btn btn-file" id='btn-Email'>EMAIL</button></li>
+            <li><button class="btn btn-filepdf dropdown-item">PDF</button></li>
+            <li><button class="btn btn-file dropdown-item" onclick="exportToExcel()">EXCEL</button></li>
+            <li><button class="btn btn-file dropdown-item" onclick="copyTable()">COPY</button></li>
+            <li><button class="btn btn-file dropdown-item" onclick="exportTocsv()">CSV</button></li>
+            <li><button class="btn btn-file dropdown-item" onclick="printTable()">PRINT</button></li>
+            <li><button class="btn btn-file dropdown-item" data-toggle="modal" data-target="#ModalCenter" id='btn-Email'>EMAIL</button></li>
         </ul>
       </div>
     </div>
     <div class="search-bar">
       <input type="text" class="search-text" placeholder="Type to Filter . . ."> 
-      <button class="btn btn-search fa fa-search" type="none"></button>
+      <button class="btn btn-search" type="none"><i class="fa-solid fa-filter" style="color: #ffffff;"></i></button>
     </div>
   </div>
 </div>
@@ -73,7 +76,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Mail</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

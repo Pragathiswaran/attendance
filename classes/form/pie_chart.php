@@ -44,9 +44,8 @@ class select_user_form extends moodleform {
         $mform->addElement('date_selector', 'date', 'Select Date:');
         $mform->setType('date', PARAM_INT);
 
-        // Adding buttons
-        $mform->addElement('submit', 'submitbutton', 'Show Data');
-        $mform->addElement('cancel', 'cancelbutton', 'Cancel', array('onclick' => 'window.location.href=\'http://localhost/moodle/local/attendance/manage.php\'; return false;'));
+        $this->add_action_buttons(true, get_string('submit'));
+
     }
 }
 
