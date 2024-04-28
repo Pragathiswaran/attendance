@@ -16,7 +16,7 @@
 
 /**
  * @package     local_attendance
- * @author      Prgathiswaran Ramyasri Rukkesh
+ * @author      Pragathiswaran Ramyasri Rukkesh
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 require_once(__DIR__.'/../../config.php');
@@ -39,7 +39,7 @@ $senderUser = $USER; // Assuming $USER is the currently logged-in user
 $subject = $emailtext;
 $message = $emailmessage;
 $attachmentname = 'Attendance_Report.pdf';
-$path = __DIR__.'/output.pdf';
+$path = __DIR__.'/templates/output.pdf';
 // Send email to user
 
 if(email_to_user($recipientUser, $senderUser, $subject, $message,"",$path, $attachmentname)){

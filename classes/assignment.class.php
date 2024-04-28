@@ -17,7 +17,7 @@
 
 /**
  * @package     local_attendance
- * @author      Prgathiswaran Ramyasri Rukkesh
+ * @author      Pragathiswaran Ramyasri Rukkesh
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

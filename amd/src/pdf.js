@@ -22,17 +22,17 @@ const button = document.getElementById('btn-Email');
         }
 
         function savePDFOnServer(pdfData) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'manage.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        console.log('PDF saved on server successfully!');
-                    } else {
-                        console.error('Failed to save PDF on server.');
-                    }
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost/moodle/local/attendance/manage.php',
+                data: { pdfDataUri: pdfData },
+                success: function(response) {
+                    alert('pdf sent successfully!');
+                    console.log(response);
+                },
+                error: function(xhr, status, error) {
+                    alert('Error sending pdf.');
+                    console.error(error);
                 }
-            };
-            xhr.send('pdfData=' + encodeURIComponent(pdfData));
+            });
         }

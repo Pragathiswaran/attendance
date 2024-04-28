@@ -23,6 +23,7 @@ require_once(__DIR__.'/../../config.php');
 require_once($CFG->dirroot.'/local/attendance/classes/access.class.php'); 
 require_once($CFG->dirroot.'/local/attendance/classes/assignment.class.php');
 require_once($CFG->dirroot.'/local/attendance/classes/quiz.class.php');
+require_once($CFG->dirroot.'/local/attendance/classes/course.class.php');
 require_once($CFG->dirroot.'/lib/accesslib.php');
 require_login();
 
@@ -75,9 +76,26 @@ if($option === 'Login'){
           <th>".get_string('sessionduration', 'local_attendance')."</th>
       </tr>
     </thead>
-    <tbody id='testrender' style='color:black; font-size:14px;'>
-    </tbody>
     ";
+    $course = new course();
+    $courseData = $course->getUserCourseActivity();
+    foreach($courseData as $data){
+        if ($data['userid'] === $USER->id) {
+            continue;
+        }
+        echo" <tbody id='testrender' style='color:black; font-size:14px;'>";
+        echo"<tr>";
+        echo"<td>".$data['userid']."</td>";
+        echo"<td>".$data['username']."</td>";
+        echo"<td>".$data['courseid']."</td>";
+        echo"<td>".$data['coursename']."</td>";
+        echo"<td>".$data['date']."</td>";
+        echo"<td>".$data['start_time']."</td>";
+        echo"<td>".$data['end_time']."</td>";
+        echo"<td>".$data['duration']."</td>";
+        echo"</tr>";
+        echo"</tbody>";
+    }
 }else if ($option === 'Quiz') {
     echo "
     <table id='example'>
@@ -116,7 +134,7 @@ if($option === 'Login'){
                 echo "</tbody>";
             }
         }
-    }
+   
 else if($option === 'Assignment'){
     echo"
     <table class='generaltable'>
@@ -161,7 +179,7 @@ else if($option === 'Assignment'){
         echo "</tbody>";
     }
 }
-
+}
 else{
     if($option === 'Course'){
         echo"

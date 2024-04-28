@@ -55,17 +55,16 @@ $courseData = $course->coursenamedata();
 
 $mform = new email();
 
-$filePath = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if the POST request contains the PDF data
-    if (isset($_POST['pdfData'])) {
+    if (isset($_POST['pdfDataUri'])) {
         // Decode the data URL (if needed)
-        $pdfData = $_POST['pdfData'];
+        $pdfData = $_POST['pdfDataUri'];
         $pdfData = str_replace('data:application/pdf;base64,', '', $pdfData);
         $pdfData = base64_decode($pdfData);
         
         // Set the file path where the PDF will be saved
-        $filePath = __DIR__.'/output.pdf';
+        $filePath = __DIR__.'/templates/output.pdf';
         
         // Save the PDF to the specified location
         file_put_contents($filePath, $pdfData);
@@ -77,9 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(400);
         // echo 'PDF data not found in request.';
     }
-} else {
-    http_response_code(405);
-    // echo 'Method not allowed.';
 }
 
 if ($mform->is_cancelled()) {
@@ -87,11 +83,14 @@ if ($mform->is_cancelled()) {
  } else if ($fromform = $mform->get_data()) {
     if (sendingmail($fromform->email, $fromform->emailtext, $fromform->emailmessage)) {
         redirect($CFG->wwwroot.'/local/attendance/manage.php', 'form submitted', null, \core\output\notification::NOTIFY_SUCCESS);
+        
     } else {
         redirect($CFG->wwwroot.'/local/attendance/manage.php', 'form not submitted', null, \core\output\notification::NOTIFY_ERROR);
     }
    
  }
+
+ 
 echo $OUTPUT->header();
 
 $data =(object)[
@@ -108,6 +107,6 @@ else{
     echo $OUTPUT->render_from_template('local_attendance/renders',$data);
 }
 
-
-
 echo $OUTPUT->footer();
+
+
