@@ -14,32 +14,33 @@
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
+<style>
+  
+</style>
 <div class="mb-4">
  <h1 id='title' class="mb-3"></h1>
   <div class="d-flex flex-row justify-content-between align-items-center" style="margin-top:15px;">
     <div>
-      <div class="btn-group">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa-solid fa-book-open"></i> Course <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            {{#coursetitleData}}
-            <li class="btn btn-value">{{coursenames}}</li>
-            {{/coursetitleData}}
-        </ul>
+    <div class="dropdown btn-group ml-1">
+      <button class="btn btn-primary dropdown-toggle" type="button" id="mainDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fab fa-wpforms"></i> Report
+      </button>
+      <div class="dropdown-menu" aria-labelledby="mainDropdown">
+          <a class="btn btn-options dropdown-item" href="#">Login</a>
+          <div class="dropdown-submenu">
+              <a class="btn dropdown-item" id="option2Dropdown" aria-expanded="false">
+                  Course
+              </a>
+              <div class="dropdown-menu" aria-labelledby="option2Dropdown">
+                {{#coursetitleData}}
+                <li class="btn btn-value dropdown-item">{{coursenames}}</li>
+                {{/coursetitleData}}
+              </div>
+          </div>
+          <a class="btn btn-options dropdown-item" href="#">Quiz</a>
+          <a class="btn btn-options dropdown-item" href="#">Assignment</a>
       </div>
-  
-      <div class="btn-group ml-1">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa-brands fa-wpforms"></i> Report <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <li><button class="btn btn-options">Login</button></li>
-            <li><button class="btn btn-options">Course</button></li>
-            <li><button class="btn btn-options">Quiz</button></li>
-            <li><button class="btn btn-options">Assignment</button></li>
-        </ul>
-      </div>
+    </div>
   
       <div class="btn-group ml-1 ">
         <button class="btn btn-primary dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
@@ -94,6 +95,8 @@
     </div>
   </div>
 </div>
+
+
 <table id="example" class="table table-bordered table-condensed">
 </table>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>

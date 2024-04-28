@@ -11,16 +11,15 @@ jQuery(document).ready(function() {
             data: { coursename: coursename },
             type: 'POST',
             success: function(response) {
-                $('#testrender').html(response);
-                //console.log(response);
+                $('#example').html(response);
+                console.log(response);
             },
             error: function(response) {
                 console.log('Error: ' + response);
             }
         });
     }
-    $('').click(handleButtonClick);
+    $('.btn-value').click(handleButtonClick);
 
-    $('').trigger('click');
 });
 
