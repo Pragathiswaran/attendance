@@ -27,12 +27,12 @@ const button = document.getElementById('btn-Email');
                 url: 'http://localhost/moodle/local/attendance/manage.php',
                 data: { pdfDataUri: pdfData },
                 success: function(response) {
-                    alert('pdf sent successfully!');
-                    console.log(response);
+                   // alert('pdf sent successfully!');
+                    //console.log(response);
                 },
                 error: function(xhr, status, error) {
-                    alert('Error sending pdf.');
-                    console.error(error);
+                   // alert('Error sending pdf.');
+                    //console.error(error);
                 }
             });
         }

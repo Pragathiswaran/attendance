@@ -17,34 +17,36 @@
 
 /**
  * @package     local_attendance
- * @author      Pragathiswaran Ramyasri Rukkesh
+ * @author      Prgathiswaran Ramyasri Rukkesh
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class course {
-    public function getUserCourseActivity() {
+    public function getUserCourseActivity($course) {
         global $DB;
 
-    $sql = "SELECT l.id AS log_event_id,
-                l.timecreated AS timestamp,
-                FROM_UNIXTIME(l.timecreated, '%Y-%m-%d %H:%i:%s') AS time_utc,
-                FROM_UNIXTIME(l.timecreated, '%H:%i:%s') AS time_only,
-                FROM_UNIXTIME(l.timecreated, '%Y-%m-%d') AS date,
-                l.action,
-                u.username,
-                u.id AS userid,
-                c.id AS courseid,
-                c.fullname AS course_name,
-                l.origin,
-                l.ip
-            FROM {logstore_standard_log} l
-            JOIN {user} u ON u.id = l.userid
-            JOIN {course} c ON c.id = l.courseid
-            WHERE l.userid != :exclude_userid
-            ORDER BY l.userid, l.courseid, l.timecreated ASC";
+        $param = ['exclude_userid' => 2, 'course_name' => $course];
 
-    $params = ['exclude_userid' => 2];
+        $sql = "SELECT l.id AS log_event_id,
+        l.timecreated AS timestamp,
+        FROM_UNIXTIME(l.timecreated, '%Y-%m-%d %H:%i:%s') AS time_utc,
+        FROM_UNIXTIME(l.timecreated, '%H:%i:%s') AS time_only,
+        FROM_UNIXTIME(l.timecreated, '%Y-%m-%d') AS date,
+        l.action,
+        u.username,
+        u.id AS userid,
+        c.id AS courseid,
+        c.fullname AS course_name,
+        l.origin,
+        l.ip
+        FROM {logstore_standard_log} l
+        JOIN {user} u ON u.id = l.userid
+        JOIN {course} c ON c.id = l.courseid
+        WHERE c.fullname = :course_name 
+        AND l.userid != :exclude_userid
+        ORDER BY l.userid, l.courseid, l.timecreated ASC;
+        ";
 
-    $activityData = $DB->get_records_sql($sql, $params);
+        $activityData = $DB->get_records_sql($sql, $param);
 
         $userCourseAccess = [];
         foreach ($activityData as $activity) {

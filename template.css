@@ -28,12 +28,15 @@
     color: black;
   }
   
-  .dropdown-menu {
-    display: none;
-    min-width: 200px;
-    max-height: 120px;
-    overflow-y: auto;
-  }
+  .dropdown-submenu {
+    position: relative;
+}
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: 0;
+  
+}
   
   .dropdown-menu li {
     display: block;
