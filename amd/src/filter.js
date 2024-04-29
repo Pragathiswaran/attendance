@@ -13,7 +13,7 @@ $(document).ready(function(){
       });
   });
 
-  var delay = 200;
+  var delay = 700;
   var timeoutId;
 
   $(".search-text").on("input", function() {
@@ -48,7 +48,7 @@ $(document).ready(function(){
       setTimeout(function() {
         $("table tbody tr").show();
         $(".search-text").removeClass("no-match").attr("placeholder", "Type to Filter . . .").val("");
-      }, 1500); // 1 seconds
+      }, 3000); // 1 seconds
     } else {
       $(".search-text").removeClass("no-match").attr("placeholder", "Type to Filter . . .");
     }
